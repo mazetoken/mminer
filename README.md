@@ -3,7 +3,7 @@ by B_S_Z
 
 This is updated version of Mist miner - bchd_mist_miner_v1 (from https://mistcoin.org)
 
-I`m not a programmer, so use it at your own risk. No guarantee that this miner is faster than other miners, but from now I will only work with mminer (mazebchdminer won`t be updated)
+I am not a programmer, so use it at your own risk. No guarantee that this miner is faster than other miners, but from now I will only work with mminer (mazebchdminer will not be updated)
 
 Mminer is prepared for mining MAZE on windows and linux and is patched for BigNumber error and dust input attack filter (just like mazebchdmminer). You but you can mine other tokens too (Mist, dSLP or BTCL)
 
