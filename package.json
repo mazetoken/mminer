@@ -1,0 +1,43 @@
+{
+  "name": "mminer",
+  "version": "1.0.0",
+  "description": "Maze SLP",
+  "main": "./src/miner.js",
+  "scripts": {
+    "start": "tsc && node ./src/miner.js",
+    "test": "mocha --timeout 1000000 --exit",
+    "tsc": "tsc"
+  },
+  "author": "Kasumi, B_S_Z",
+  "license": "MIT",
+  "dependencies": {
+    "@types/eventsource": "^1.1.5",
+    "@types/node-fetch": "^2.5.7",
+    "bitbox-sdk": "^8.11.2",
+    "bitcore-lib-cash": "^9.0.0",
+    "child_process": "^1.0.2",
+    "cluster": "^0.7.7",
+    "dotenv": "^8.2.0",
+    "electrum-cash": "^2.0.5",
+    "eventsource": "^1.0.7",
+    "grpc-bchrpc-node": "github:mazetoken/grpc-bchrpc-node",
+    "node-fetch": "^2.6.1",
+    "protons": "^2.0.0",
+    "slpjs": "^0.27.8",
+    "synchronized-promise": "^0.3.1"
+  },
+  "devDependencies": {
+    "bchaddrjs-slp": "^0.2.9",
+    "bitcoin-rpc-promise-retry": "^1.3.0",
+    "bitcoincashjs-lib-p2sh": "^4.0.2",
+    "flatted": "^3.1.0",
+    "mocha": "^8.2.0",
+    "mocha-steps": "^1.3.0",
+    "source-map-support": "^0.5.19",
+    "spedn": "^0.3.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.5",
+    "typescript-tslint-plugin": "^0.5.5",
+    "varint": "^6.0.0"
+  }
+}

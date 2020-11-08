@@ -1,0 +1,59 @@
+// SLP Mist Miner Contract
+
+contract SlpCoinBlockReward(
+    [byte] stateT0,                 // the contract should be instantiated with an initial state of 0x00000000
+    [byte] tokenId,                 // the SLP token ID
+    int initialMintAmount,          // the initial mint amount of tokens to mint (in token satoshi units with divisibility included)
+    int difficultyLeadingZeroBytes, // this is the number of zeros that should be leading in the mining solution hash
+    int halvingInterval,            // this is the block spacing between halving events (its actually a reduction interval, not halving like bitcoin)
+    int startingBlockHeight         // this is the base blockchain height when the mining starts
+    ) {
+        challenge generate(
+            [byte; 4] stateT1,
+            [byte; 4] minerSolution,
+            [byte; 8] mintAmount,
+            Sig s,
+            PubKey minerPK,
+            [byte] preimage,
+            [byte] arbitraryData
+    ) {
+        // preimage deserializaion
+        (_, [byte] tail)= preimage @ (size(preimage) - 40);       // hashOutput + nLocktime + sighash
+        ([byte] hashOutput,  _) = tail @ 32;
+        ([byte] torso,_) =  preimage @ (size(preimage) - 44);
+        ( _, [byte] belly) = torso @ 104;
+        ([byte] _scriptCode, _) = belly @ (size(belly) - 8);
+        ( _, [byte] rawscr) = _scriptCode @ (3 + 1);             // p2sh pushcode is 3 bytes, stateT0 pushcode is 1 byte
+        ([byte] prevState, [byte] rawscrBase) = rawscr @ size(stateT0);
+
+        // check sig to enforce valid preimage and scriptCode
+        verify checkSig(s, minerPK);
+        verify checkDataSig(toDataSig(s), sha256(preimage), minerPK);
+
+        // verify new state is updated to the proper block height
+        int tokenHeightInt = bin2num(stateT1);
+        verify bin2num(stateT0) == tokenHeightInt - 1;
+
+        // calculate proper mintAmount based on current block height
+        int divisor = (tokenHeightInt / halvingInterval) + 1;
+        verify mintAmount == num2bin(initialMintAmount / divisor, 4);
+
+        // flip the byte order for SLP output amount
+        [byte] mintAmountBE = 0x00000000 . reverseBytes(mintAmount);
+
+        // verify the miner's solution is acceptable using the prev difficulty
+        [byte] solhash = hash256(preimage . minerSolution);
+        ([byte] work, _) = solhash @ difficultyLeadingZeroBytes;
+        verify bin2num(work) == 0;
+
+        // prepend the new state to rawscr
+        [byte] rawscrNew = 0x04 . stateT1 . rawscrBase;
+
+        [byte] out1_mint_slp = 0x0000000000000000396a04534c50000101044d494e5420 . tokenId . 0x010208 . mintAmountBE;
+        [byte] out2_token_p2pkh = 0x22020000000000001976a914 . hash160(minerPK) . 0x88ac;
+        [byte] out3_baton_p2sh = 0x220200000000000017a914 . hash160(rawscrNew) . 0x87;
+
+        verify hash256(out1_mint_slp . out2_token_p2pkh . out3_baton_p2sh) == Sha256(hashOutput);
+        verify checkLockTime(TimeStamp(tokenHeightInt + startingBlockHeight));
+    }
+}
