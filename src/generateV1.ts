@@ -8,12 +8,12 @@ import { BlockNotification, ClientReadableStream,
             TransactionNotification } from "grpc-bchrpc-node";
 import { IGrpcClient } from "grpc-bchrpc";
 let IGrpcClient = GrpcClient;
-import { BchdNetwork,
+import { BchdNetwork, INetwork,
          LocalValidator, ScriptSigP2PK, ScriptSigP2PKH,
          ScriptSigP2SH, Slp, SlpAddressUtxoResult,
-         SlpTransactionDetails, SlpTransactionType,
+         SlpTransactionDetails, SlpTransactionType, SlpValidator,
          TransactionHelpers, Utils,
-         Validation} from "slpjs";
+         Validation } from "slpjs";
 import { ValidityCache } from "./cache";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -42,7 +42,12 @@ const txnHelpers = new TransactionHelpers(slp);
 import bchaddr from "bchaddrjs-slp";
 const Bitcore = require("bitcoincashjs-lib-p2sh");
 
-let client = new GrpcClient({ url: process.env.BCHD_GRPC_URL });
+let client: GrpcClient;
+if (process.env.BCHD_GRPC_CERT) {
+    client = new GrpcClient({ url: process.env.BCHD_GRPC_URL, rootCertPath: process.env.BCHD_GRPC_CERT });
+} else {
+    client = new GrpcClient({ url: process.env.BCHD_GRPC_URL });
+}
 
 const minerWif: string = process.env.WIF!;
 const minerPubKey = (new ECPair().fromWIF(minerWif)).getPublicKeyBuffer();
