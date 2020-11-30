@@ -1,6 +1,6 @@
-### Mminer v.1.0.1
+### Mminer 1.0.1 
 
-_by B_S_Z_
+_Update and tutorial by [B_S_Z](https://t.me/b_s_z)_
 
 You can create a mineable SLP token (based on Mist covenant contract script) and mine it with Mminer
 
@@ -8,11 +8,13 @@ Mminer is an updated version of Mist miner - bchd_mist_miner_v1 (https://mistcoi
 
 What is updated:
 
-- Mminer is patched for BigNumber error and dust input attack (patch is from https://gitlab.com/blue_mist/miner)
+- Mminer is patched for BigNumber error and dust input attack (the patch is from https://gitlab.com/blue_mist/miner)
 
 - package.json - npm packages
 
-- generateV1.ts - Mminer works with slpjs v.0.27.8 and grpc-bchrpc-node v.0.11.3 (skipSlpValidityChecks is set to "true" and should be set to "false" when BCHD instances support SLP indexing)
+- generateV1.ts - Mminer works with slpjs 0.27.8 and grpc-bchrpc-node 0.11.3 (https://github.com/simpleledgerinc)
+
+_*SkipSlpValidityChecks is set to "true" and should be set to "false" when BCHD instances support SLP indexing)_
 
 Mminer is tested and it works, but use it at your own risk
 
@@ -48,12 +50,14 @@ _*You can send more ^ later_
 
 - Right click on your mining address (in wallet_1) and get your private key (WIF)
 
-_*Do not send other BCH to your mining address, otherwise you could pay high fee or you will not mine anything
+_*Do not send other BCH to your mining address, otherwise you could pay high fee or you will not mine anything_
+
+_*You can download Mminer prepared for mining dSLP [here](https://github.com/mazetoken/mining/raw/master/dslpmminer.zip)_
 
 
 #### Mining on Windows
 
-##### First method:
+#### First method:
 
 - Download [Mminer](https://github.com/mazetoken/mminer/archive/main.zip). Copy unzipped mminer-main folder to drive C. Open the folder and open .env file in notepad. Paste your WIF="..." in .env. Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank (or paste BCHD_GRPC_URL="..." if you know any). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
 
@@ -79,15 +83,16 @@ _*Do not send other BCH to your mining address, otherwise you could pay high fee
 
 `npm i`
 
-*Ignore errors. Do not run npm audit fix!
+_*Ignore errors. Do not run npm audit fix!_
 
 `npm start`
 
 _*Txid will be downloaded first (it may take a while) and then mining will start_
+
 _*Press Ctrl C to stop the miner_
 
 
-##### Second method:
+#### Second method:
 
 - Make sure that Microsoft Visual C++ Redistributable is installed on your system. If it is not, you can download it from [here](https://aka.ms/vs/16/release/VC_redist.x86.exe) and [here](https://aka.ms/vs/16/release/VC_redist.x64.exe) - you need to install both
 
@@ -124,7 +129,7 @@ _*Press Ctrl C and type Y to stop the miner_
 
 _*You may need 2GB ram_
 
-##### Go to Google Play Store and download UserLAnd app
+#### Go to Google Play Store and download UserLAnd app
 
 - Install the app
 
@@ -169,7 +174,7 @@ _*You can set fastmine to "no" if you don't want to install CMake (below), but m
 _*Tap: ctrl O enter - to save changes and ctrl X enter - to exit editor_
 
 
-##### Download CMake, but not to the mminer directory (we need a new version of CMake for fastmine). Unfortunately, it will take some time - a few hours, so be patient. You can change the sleep time of your phone display to 30 minutes to make it a little faster. You can skip this if you do not want to mine with fastmine (we do not need fastmine to mine dSLP token - fastmine is set to "no" by default)
+#### Download CMake, but not to the mminer directory (we need a new version of CMake for fastmine). Unfortunately, it will take some time - a few hours, so be patient. You can change the sleep time of your phone display to 30 minutes to make it a little faster. You can skip this if you do not want to mine with fastmine (we do not need fastmine to mine dSLP token - fastmine is set to "no" by default)
 
 Type commands:
 
@@ -197,7 +202,7 @@ Type commands:
 
 `cd ..`
 
-##### Install and start the miner. Type commands:
+#### Install and start the miner. Type commands:
 
 `cd mminer`
 
@@ -245,21 +250,13 @@ Maze reward schedule:
 Token Height | Maze Reward
 
 `1-4319 | 800`
-
 `4320-8639 | 400`
-
 `8640-12959 | 266,666666`
-
 `12960-17279 | 200`
-
 `17280-21599 | 160`
-
 `21600-25919 | 133,333333`
-
 `25920-30239 | 114,292929`
-
 `30240-34559 | 100`
-
 `34560< | ...`
 
 Mist:
@@ -287,21 +284,13 @@ dSLP reward schedule:
 Token Height | Maze Reward
 
 `1-6479 | 200 dSLP`
-
 `6480-12959 | 100 dSLP`
-
 `12960-19439 | 66,6666 dSLP`
-
 `19440-25919 | 50 dSLP`
-
 `25920-32399 | 40 dSLP`
-
 `32400-38879 | 33,3232 dSLP`
-
 `38880-45359 | 25,5555 dSLP`
-
 `45360-51839 | 25 dSLP`
-
 `51840< | ...`
 
 BTCL:
@@ -314,6 +303,6 @@ BTCL:
 `TOKEN_ID_V1="20e8e13347a76f6041bf7d31b04a7bbb7e2deb5d95e15ae8619179b3552ca02a"`
 `USE_FASTMINE="yes"`
 
-
+--------------------------------------------------------------------------------
 
 
