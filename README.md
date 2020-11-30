@@ -68,10 +68,15 @@ _*Do not send other BCH to your mining address, otherwise you could pay high fee
 - In a command line type commands:
 
 `cd /mnt/c`
+
 `sudo apt update`
+
 `sudo apt upgrade`
+
 `sudo apt-get install git cmake gcc g++ make`
+
 `cd mminer-main`
+
 `npm i`
 
 *Ignore errors. Do not run npm audit fix!
@@ -99,8 +104,11 @@ _*Press Ctrl C to stop the miner_
 _*Ignore errors. Do not update npm_
 
 `cd ..`
+
 `cd  ..`
+
 `cd mminer-main`
+
 `npm i`
 
 _*Do not run npm audit fix !_
@@ -129,17 +137,25 @@ _*You may need 2GB ram_
 - In a command line type your password (it is invisible) and type or paste commands (one by one):
 
 `sudo apt-get update && sudo apt-get dist-upgrade`
+
 `sudo apt-get install git wget curl`
+
 `curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -`
+
 `sudo apt-get install -y nodejs`
+
 `sudo npm install -g npm@7.0.6`
 
 _*Ignore errors. Do not update npm_
 
 `sudo apt-get install cmake gcc g++ make`
+
 `sudo apt-get install nano zip unzip`
+
 `git clone https://github.com/mazetoken/mminer.git`
+
 `cd mminer`
+
 `sudo nano .env`
 
 _*Type/paste your WIF="..."_
@@ -158,21 +174,33 @@ _*Tap: ctrl O enter - to save changes and ctrl X enter - to exit editor_
 Type commands:
 
 `cd ..`
+
 `sudo apt install build-essential libssl-dev`
+
 `wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4.tar.gz`
+
 `tar -zxvf cmake-3.18.4.tar.gz`
+
 `cd cmake-3.18.4`
+
 `./bootstrap`
+
 `make` 
+
 `sudo make install`
+
 `cd ..`
+
 `cd mminer/fastmine`
+
 `cmake . && make`
+
 `cd ..`
 
 ##### Install and start the miner. Type commands:
 
 `cd mminer`
+
 `npm i`
 
 _*Ignore errors. Do not run npm audit fix !_
@@ -188,6 +216,7 @@ _*Tap Ctrl C (to stop the miner)_
 Start the miner again (if you have closed UserLAnd app) - open the app, type your password and type commands:
 
 `cd mminer`
+
 `npm start`
 
 
@@ -216,13 +245,21 @@ Maze reward schedule:
 Token Height | Maze Reward
 
 `1-4319 | 800`
+
 `4320-8639 | 400`
+
 `8640-12959 | 266,666666`
+
 `12960-17279 | 200`
+
 `17280-21599 | 160`
+
 `21600-25919 | 133,333333`
+
 `25920-30239 | 114,292929`
+
 `30240-34559 | 100`
+
 `34560< | ...`
 
 Mist:
@@ -250,13 +287,21 @@ dSLP reward schedule:
 Token Height | Maze Reward
 
 `1-6479 | 200 dSLP`
+
 `6480-12959 | 100 dSLP`
+
 `12960-19439 | 66,6666 dSLP`
+
 `19440-25919 | 50 dSLP`
+
 `25920-32399 | 40 dSLP`
+
 `32400-38879 | 33,3232 dSLP`
+
 `38880-45359 | 25,5555 dSLP`
+
 `45360-51839 | 25 dSLP`
+
 `51840< | ...`
 
 BTCL:
