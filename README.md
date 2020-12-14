@@ -8,19 +8,25 @@ Mminer is an updated version of Mist miner - bchd_mist_miner_v1 (https://mistcoi
 
 What is updated:
 
-- Mminer is patched for BigNumber error and dust input attack (the patch is from https://gitlab.com/blue_mist/miner)
+- Mminer is patched for "bn not an integer" error and "dust input attack" (the patch is from https://gitlab.com/blue_mist/miner)
 
-- package.json - npm packages
+- package.json - npm packages (e.g. slpjs 0.27.9)
 
-- generateV1.ts - Mminer works with slpjs 0.27.8 and grpc-bchrpc-node 0.11.3 (https://github.com/simpleledgerinc)
+- generateV1.ts - Mminer works grpc-bchrpc-node 0.11.3* (https://github.com/simpleledgerinc)
 
 _*SkipSlpValidityChecks is set to "true" and should be set to "false" when BCHD instances support SLP indexing)_
 
 Mminer is tested and it works, but use it at your own risk
 
+You use Mminer for other tokens (scroll down for tokens environment). You can also try other miners...
+
+For NFT1-Group token mining and tutorial go [here](https://github.com/mazetoken/mining/raw/master/mminernft.zip)
+
 --------------------------------------------------------------------------------
 
 ### Mining tutorial
+
+_*You can also check [this](https://github.com/blockparty-sh/mist-miner) tutorial_
 
 #### Prepare Electron Cash SLP desktop wallet for mining
 
@@ -34,17 +40,18 @@ _*You can use only one wallet with two addresses (one for mining and one for fun
 
 - Open wallet_1 (mining wallet), choose a mining address for your mining coins (0.00001870). Send, to the mining address, from wallet_2, multiple 0.00001870 BCH in one transanction e.g. - paste in send tab - pay to field: 
 
-`simpleledger:yourminingaddress,0.00001870`
-`simpleledger:yourminingaddress,0.00001870`
-`simpleledger:yourminingaddress,0.00001870`
-`simpleledger:yourminingaddress,0.00001870`
-`simpleledger:yourminingaddress,0.00001870`
-`simpleledger:yourminingaddress,0.00001870`
-`simpleledger:yourminingaddress,0.00001870`
-`simpleledger:yourminingaddress,0.00001870`
-`simpleledger:yourminingaddress,0.00001870`
-`simpleledger:yourminingaddress,0.00001870`
-
+```
+simpleledger:yourminingaddress,0.00001870
+simpleledger:yourminingaddress,0.00001870
+simpleledger:yourminingaddress,0.00001870
+simpleledger:yourminingaddress,0.00001870
+simpleledger:yourminingaddress,0.00001870
+simpleledger:yourminingaddress,0.00001870
+simpleledger:yourminingaddress,0.00001870
+simpleledger:yourminingaddress,0.00001870
+simpleledger:yourminingaddress,0.00001870
+simpleledger:yourminingaddress,0.00001870
+```
 
 _*You can send more ^ later_
 
@@ -83,6 +90,8 @@ _*You can download Mminer prepared for mining dSLP [here](https://github.com/maz
 
 `npm i`
 
+`npm update` (*optional)
+
 _*Ignore errors. Do not run npm audit fix!_
 
 `npm start`
@@ -106,7 +115,7 @@ _*Press Ctrl C to stop the miner_
 
 `npm i -g npm@7.0.6`
 
-_*Ignore errors. Do not update npm_
+_*Ignore errors_
 
 `cd ..`
 
@@ -116,7 +125,9 @@ _*Ignore errors. Do not update npm_
 
 `npm i`
 
-_*Do not run npm audit fix !_
+_*Igonre errors. Do not run npm audit fix !_
+
+`npm update` (*optional)
 
 `npm start`
 
@@ -151,7 +162,7 @@ _*You may need 2GB ram_
 
 `sudo npm install -g npm@7.0.6`
 
-_*Ignore errors. Do not update npm_
+_*Ignore errors_
 
 `sudo apt-get install cmake gcc g++ make`
 
@@ -204,8 +215,6 @@ Type commands:
 
 #### Install and start the miner. Type commands:
 
-`cd mminer`
-
 `npm i`
 
 _*Ignore errors. Do not run npm audit fix !_
@@ -237,71 +246,84 @@ _*Change token environment in .env file to mine different tokens. Use different 
 
 Maze:
 
-`TOKEN_INIT_REWARD_V1=800000000`
-`TOKEN_HALVING_INTERVAL_V1=4320`
-`MINER_DIFFICULTY_V1=3`
-`MINER_UTF8=""`
-`TOKEN_START_BLOCK_V1=645065`
-`TOKEN_ID_V1="bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378"`
-`USE_FASTMINE="yes"`
+```
+TOKEN_INIT_REWARD_V1=800000000
+`TOKEN_HALVING_INTERVAL_V1=4320
+`MINER_DIFFICULTY_V1=3
+`MINER_UTF8=""
+`TOKEN_START_BLOCK_V1=645065
+`TOKEN_ID_V1="bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378"
+`USE_FASTMINE="yes"
+```
 
 Maze reward schedule:
 
 Token Height | Maze Reward
 
-`1-4319 | 800`
-`4320-8639 | 400`
-`8640-12959 | 266,666666`
-`12960-17279 | 200`
-`17280-21599 | 160`
-`21600-25919 | 133,333333`
-`25920-30239 | 114,292929`
-`30240-34559 | 100`
-`34560< | ...`
+```
+1-4319 | 800
+4320-8639 | 400
+8640-12959 | 266,666666
+12960-17279 | 200
+17280-21599 | 160
+21600-25919 | 133,333333
+25920-30239 | 114,292929
+30240-34559 | 100
+34560< | ...`
+```
 
 Mist:
 
-`TOKEN_INIT_REWARD_V1=400000000`
-`TOKEN_HALVING_INTERVAL_V1=4320`
-`MINER_DIFFICULTY_V1=3`
-`MINER_UTF8=""`
-`TOKEN_START_BLOCK_V1=639179`
-`TOKEN_ID_V1="d6876f0fce603be43f15d34348bb1de1a8d688e1152596543da033a060cff798"`
-`USE_FASTMINE="yes"`
+```
+TOKEN_INIT_REWARD_V1=400000000
+TOKEN_HALVING_INTERVAL_V1=4320
+MINER_DIFFICULTY_V1=3
+MINER_UTF8=""
+TOKEN_START_BLOCK_V1=639179
+TOKEN_ID_V1="d6876f0fce603be43f15d34348bb1de1a8d688e1152596543da033a060cff798"
+USE_FASTMINE="yes"
+```
 
 dSLP:
 
-`TOKEN_INIT_REWARD_V1=2000000`
-`TOKEN_HALVING_INTERVAL_V1=6480`
-`MINER_DIFFICULTY_V1=2`
-`MINER_UTF8=""`
-`TOKEN_START_BLOCK_V1=653104`
-`TOKEN_ID_V1="5aa6c9485f746cddfb222cba6e215ab2b2d1a02f3c2506774b570ed40c1206e8"`
-`USE_FASTMINE="no"`
+```
+TOKEN_INIT_REWARD_V1=2000000
+TOKEN_HALVING_INTERVAL_V1=6480
+MINER_DIFFICULTY_V1=2
+MINER_UTF8=""
+TOKEN_START_BLOCK_V1=653104
+TOKEN_ID_V1="5aa6c9485f746cddfb222cba6e215ab2b2d1a02f3c2506774b570ed40c1206e8"
+USE_FASTMINE="no"
+```
+_*You can set fastmine to "yes" for dSLP, or use this [miner](https://github.com/mazetoken/mining/raw/master/dslpmminer.zip)_
 
 dSLP reward schedule:
 
 Token Height | Maze Reward
 
-`1-6479 | 200 dSLP`
-`6480-12959 | 100 dSLP`
-`12960-19439 | 66,6666 dSLP`
-`19440-25919 | 50 dSLP`
-`25920-32399 | 40 dSLP`
-`32400-38879 | 33,3232 dSLP`
-`38880-45359 | 25,5555 dSLP`
-`45360-51839 | 25 dSLP`
-`51840< | ...`
+```
+1-6479 | 200 dSLP
+6480-12959 | 100
+12960-19439 | 66,6666
+19440-25919 | 50
+25920-32399 | 40
+32400-38879 | 33,3232
+38880-45359 | 25,5555
+45360-51839 | 25
+51840< | ...`
+```
 
 BTCL:
 
-`TOKEN_INIT_REWARD_V1=800000000`
-`TOKEN_HALVING_INTERVAL_V1=4320`
-`MINER_DIFFICULTY_V1=3`
-`MINER_UTF8=""`
-`TOKEN_START_BLOCK_V1=655223`
-`TOKEN_ID_V1="20e8e13347a76f6041bf7d31b04a7bbb7e2deb5d95e15ae8619179b3552ca02a"`
-`USE_FASTMINE="yes"`
+```
+TOKEN_INIT_REWARD_V1=800000000
+TOKEN_HALVING_INTERVAL_V1=4320
+MINER_DIFFICULTY_V1=3
+MINER_UTF8=""
+TOKEN_START_BLOCK_V1=655223
+TOKEN_ID_V1="20e8e13347a76f6041bf7d31b04a7bbb7e2deb5d95e15ae8619179b3552ca02a"
+USE_FASTMINE="yes"
+```
 
 --------------------------------------------------------------------------------
 

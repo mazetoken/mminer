@@ -1,5 +1,5 @@
 {
-  "name": "mminer",
+  "name": "Mminer",
   "version": "1.0.1",
   "description": "Maze SLP",
   "main": "./src/miner.js",
@@ -17,7 +17,7 @@
     "dotenv": "^8.2.0",
     "grpc-bchrpc-node": "github:mazetoken/grpc-bchrpc-node",
     "protons": "^2.0.0",
-    "slpjs": "^0.27.8",
+    "slpjs": "^0.27.9",
     "synchronized-promise": "^0.3.1"
   },
   "devDependencies": {

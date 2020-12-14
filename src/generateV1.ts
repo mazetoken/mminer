@@ -8,7 +8,7 @@ import { BlockNotification, ClientReadableStream,
             TransactionNotification } from "grpc-bchrpc-node";
 import { IGrpcClient } from "grpc-bchrpc";
 let IGrpcClient = GrpcClient;
-import { BchdNetwork, INetwork,
+import { BchdNetwork,
          LocalValidator, ScriptSigP2PK, ScriptSigP2PKH,
          ScriptSigP2SH, Slp, SlpAddressUtxoResult,
          SlpTransactionDetails, SlpTransactionType, SlpValidator,
@@ -89,8 +89,7 @@ const network = new BchdNetwork({BITBOX, client, validator});
 const getRewardAmount = (block: number) => {
     const initReward = parseInt(process.env.TOKEN_INIT_REWARD_V1 as string, 10);
     const halveningInterval = parseInt(process.env.TOKEN_HALVING_INTERVAL_V1 as string, 10);
-    const double = initReward / (Math.floor(block / halveningInterval) + 1);
-    return parseInt(double.toString(), 10);
+    return Math.floor(initReward / (Math.floor(block / halveningInterval) + 1));
 };
 
 interface IState {
