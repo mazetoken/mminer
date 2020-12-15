@@ -16,5 +16,5 @@ const run = async () => {
     }
 };
 
-console.log("Maze Mminer 1.0.1 started.");
+console.log("Mminer 1.0.2 started.");
 run();

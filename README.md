@@ -1,8 +1,8 @@
-### Mminer 1.0.1 
+### Mminer 1.0.2 
 
 _Update and tutorial by [B_S_Z](https://t.me/b_s_z)_
 
-You can create a mineable SLP token (based on Mist covenant contract script) and mine it with Mminer
+You can create a mineable SLP tokens (based on Mist covenant contract script) and mine it with Mminer
 
 Mminer is an updated version of Mist miner - bchd_mist_miner_v1 (https://mistcoin.org)
 
@@ -12,19 +12,22 @@ What is updated:
 
 - package.json - npm packages (e.g. slpjs 0.27.9)
 
-- generateV1.ts - Mminer works grpc-bchrpc-node 0.11.3* (https://github.com/simpleledgerinc)
+- generateV1.ts - Mminer works with grpc-bchrpc-node 0.11.3* (https://github.com/simpleledgerinc)
 
 _*SkipSlpValidityChecks is set to "true" and should be set to "false" when BCHD instances support SLP indexing)_
 
+- NFT1-Group Token mining
+
+
 Mminer is tested and it works, but use it at your own risk
 
-You use Mminer for other tokens (scroll down for tokens environment). You can also try other miners...
+Mminer is prepared for mining MAZE, but you can use it to mine other tokens and NFTs (scroll down to tokens environment and replace data in Mminer .env file)
 
-For NFT1-Group token mining and tutorial go [here](https://github.com/mazetoken/mining/raw/master/mminernft.zip)
+#### IMPORTANT: for NFT1-Group Token mining you need to change the token environment (.env file) and after you run `npm i` and before you run `npm start`, go to node_modules folder in mminer-main directory, go to slpjs folder, go to lib folder and open slpjs.js (in editor, e.g. notepad) and change token type from `0x01` to `0x81` in line 423 (it should look like this: `if (type === void 0) { type = 0x81; }`)
 
 --------------------------------------------------------------------------------
 
-### Mining tutorial
+### Mining tutorial (Windows, Linux and Android phone)
 
 _*You can also check [this](https://github.com/blockparty-sh/mist-miner) tutorial_
 
@@ -59,12 +62,10 @@ _*You can send more ^ later_
 
 _*Do not send other BCH to your mining address, otherwise you could pay high fee or you will not mine anything_
 
-_*You can download Mminer prepared for mining dSLP [here](https://github.com/mazetoken/mining/raw/master/dslpmminer.zip)_
-
 
 #### Mining on Windows
 
-#### First method:
+##### First method:
 
 - Download [Mminer](https://github.com/mazetoken/mminer/archive/main.zip). Copy unzipped mminer-main folder to drive C. Open the folder and open .env file in notepad. Paste your WIF="..." in .env. Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank (or paste BCHD_GRPC_URL="..." if you know any). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
 
@@ -101,7 +102,7 @@ _*Txid will be downloaded first (it may take a while) and then mining will start
 _*Press Ctrl C to stop the miner_
 
 
-#### Second method:
+##### Second method:
 
 - Make sure that Microsoft Visual C++ Redistributable is installed on your system. If it is not, you can download it from [here](https://aka.ms/vs/16/release/VC_redist.x86.exe) and [here](https://aka.ms/vs/16/release/VC_redist.x64.exe) - you need to install both
 
@@ -125,7 +126,7 @@ _*Ignore errors_
 
 `npm i`
 
-_*Igonre errors. Do not run npm audit fix !_
+_*Ignore errors. Do not run npm audit fix !_
 
 `npm update` (*optional)
 
@@ -140,7 +141,7 @@ _*Press Ctrl C and type Y to stop the miner_
 
 _*You may need 2GB ram_
 
-#### Go to Google Play Store and download UserLAnd app
+##### Go to Google Play Store and download UserLAnd app
 
 - Install the app
 
@@ -162,7 +163,7 @@ _*You may need 2GB ram_
 
 `sudo npm install -g npm@7.0.6`
 
-_*Ignore errors_
+_*Ignore errors. Do not run npm audit fix !__
 
 `sudo apt-get install cmake gcc g++ make`
 
@@ -180,12 +181,12 @@ _*Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank (or paste BCHD_GRPC_URL="..
 
 _*You can type your mining tag (your nick or whatever) in MINER_UTF8="..."_
 
-_*You can set fastmine to "no" if you don't want to install CMake (below), but mining is faster with fastmine set to "yes"_
+_*You can set fastmine to "no" if you don't want to install CMake (below), but mining is faster if fastmine is set to "yes"_
 
 _*Tap: ctrl O enter - to save changes and ctrl X enter - to exit editor_
 
 
-#### Download CMake, but not to the mminer directory (we need a new version of CMake for fastmine). Unfortunately, it will take some time - a few hours, so be patient. You can change the sleep time of your phone display to 30 minutes to make it a little faster. You can skip this if you do not want to mine with fastmine (we do not need fastmine to mine dSLP token - fastmine is set to "no" by default)
+##### Download CMake, but not to the mminer directory (we need a new version of CMake for fastmine). Unfortunately, it will take some time - a few hours, so be patient. You can change the sleep time of your phone display to 30 minutes to make it a little faster. You can skip this if you do not want to mine with fastmine (we do not need fastmine to mine dSLP token - fastmine is set to "no" by default)
 
 Type commands:
 
@@ -213,7 +214,7 @@ Type commands:
 
 `cd ..`
 
-#### Install and start the miner. Type commands:
+##### Install and start the miner. Type commands:
 
 `npm i`
 
@@ -233,27 +234,42 @@ Start the miner again (if you have closed UserLAnd app) - open the app, type you
 
 `npm start`
 
+--------------------------------------------------------------------------------------
 
-#### If you need any help, ask in Maze [Group](https://t.me/mazemining)
+##### NFT child tokens
+
+To create NFT child tokens from mineable NFT1-Group tokens go to ELectron Cash wallet, go to Tokens tab, rigt click on NFT token - create new NFT, choose a name and a symbol for your NFT child token (mined NFT1-Group token will be burned as each child token is created - minted). Before you start freeze your mining coins (all 0.00001870)
+
+You do not need to mine NFT1-Group Token constantly. Mine a few blocks and create some NFT child tokens
+
+Always send NFT to SLP NFT compatible wallets (e.g. Electron Cash wallet SLP edition or memo.cash browser wallet)
 
 --------------------------------------------------------------------------------------
 
-#### Maze and other mineable tokens environment
+##### If you need any help, ask in Maze [Group](https://t.me/mazemining)
 
-_*There will be eight halving events. Total supply will not be higher than 21 million_
+--------------------------------------------------------------------------------------
 
-_*Change token environment in .env file to mine different tokens. Use different addressess for different tokens_
+#### Maze and other mineable tokens environment (inculding Non-Fungible Tokens)
 
-Maze:
+_*There will be eight halving events for SLP Token Type 1. Total supply will not be higher than 21 million_
+
+_*NFT1-Group Token mining will probably stop at third halving (rewad reduction) because of 0 decimal places_
+
+_*Do not paste MINER_COVENANT_V1 from SLP Token Type 1 to NFT1-Group Token_
+
+_*Change data in Mminer .env file to mine different tokens. Use different addressess (WIFs) for different tokens_
+
+
+##### Maze:
 
 ```
 TOKEN_INIT_REWARD_V1=800000000
-`TOKEN_HALVING_INTERVAL_V1=4320
-`MINER_DIFFICULTY_V1=3
-`MINER_UTF8=""
-`TOKEN_START_BLOCK_V1=645065
-`TOKEN_ID_V1="bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378"
-`USE_FASTMINE="yes"
+TOKEN_HALVING_INTERVAL_V1=4320
+MINER_DIFFICULTY_V1=3
+TOKEN_START_BLOCK_V1=645065
+TOKEN_ID_V1="bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378"
+USE_FASTMINE="yes"
 ```
 
 Maze reward schedule:
@@ -272,30 +288,56 @@ Token Height | Maze Reward
 34560< | ...`
 ```
 
-Mist:
+##### Maze NFT1-Group Token (MAZE NFT is the first mineable NFT, but it is not available for public mining for now):
+
+```
+TOKEN_INIT_REWARD_V1=20
+TOKEN_HALVING_INTERVAL_V1=
+MINER_COVENANT_V1="5779820128947f777601207f75597982012c947f757601687f777678827758947f7576538b7f77765c7982777f011179011179ad011179828c7f756079a8011279bb011479815e7981788c88765b79968b0114795e795279965480880400000000011579bc7e0112790117797eaa765f797f757681008854011a797e56797e170000000000000000396a04534c50000181044d494e54200113797e030102087e54797e0c22020000000000001976a914011879a97e0288ac7e0b220200000000000017a9145379a97e01877e527952797e787eaa607988587901127993b175516b6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6c"
+MINER_DIFFICULTY_V1=3
+TOKEN_START_BLOCK_V1=
+TOKEN_ID_V1="8678ad8c66cdcbdbb6e8f610fda055458b096c0f09a7fb6a18fe098343411f21"
+USE_FASTMINE="yes"
+```
+
+
+##### Arena NFT1-Group Token:
+
+```
+MINER_COVENANT_V1="5779820128947f777601207f75597982012c947f757601687f777678827758947f7576538b7f77765c7982777f011179011179ad011179828c7f756079a8011279bb011479815e7981788c88765b79968b0114795e795279965480880400000000011579bc7e0112790117797eaa765f797f757681008854011a797e56797e170000000000000000396a04534c50000181044d494e54200113797e030102087e54797e0c22020000000000001976a914011879a97e0288ac7e0b220200000000000017a9145379a97e01877e527952797e787eaa607988587901127993b175516b6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6c"
+TOKEN_INIT_REWARD_V1=10
+TOKEN_HALVING_INTERVAL_V1=25920
+MINER_DIFFICULTY_V1=3
+TOKEN_START_BLOCK_V1=665753
+TOKEN_ID_V1="9cc03f37c27ec0334b839f1ed66e07da13ff19d29a497ebbf505e124453831fd"
+USE_FASTMINE="yes"
+
+```
+_*You can also download MminerNFT - prepared for mining ARENA NFT1-Group token [here](https://github.com/mazetoken/mining/raw/master/mminernft.zip)
+
+
+##### Mist:
 
 ```
 TOKEN_INIT_REWARD_V1=400000000
 TOKEN_HALVING_INTERVAL_V1=4320
 MINER_DIFFICULTY_V1=3
-MINER_UTF8=""
 TOKEN_START_BLOCK_V1=639179
 TOKEN_ID_V1="d6876f0fce603be43f15d34348bb1de1a8d688e1152596543da033a060cff798"
 USE_FASTMINE="yes"
 ```
 
-dSLP:
+##### dSLP:
 
 ```
 TOKEN_INIT_REWARD_V1=2000000
 TOKEN_HALVING_INTERVAL_V1=6480
 MINER_DIFFICULTY_V1=2
-MINER_UTF8=""
 TOKEN_START_BLOCK_V1=653104
 TOKEN_ID_V1="5aa6c9485f746cddfb222cba6e215ab2b2d1a02f3c2506774b570ed40c1206e8"
 USE_FASTMINE="no"
 ```
-_*You can set fastmine to "yes" for dSLP, or use this [miner](https://github.com/mazetoken/mining/raw/master/dslpmminer.zip)_
+_*You can set fastmine to "yes" for dSLP, but you will have to use this [miner](https://github.com/mazetoken/mining/raw/master/dslpmminer.zip)_
 
 dSLP reward schedule:
 
@@ -313,18 +355,17 @@ Token Height | Maze Reward
 51840< | ...`
 ```
 
-BTCL:
+##### BTCL:
 
 ```
 TOKEN_INIT_REWARD_V1=800000000
 TOKEN_HALVING_INTERVAL_V1=4320
 MINER_DIFFICULTY_V1=3
-MINER_UTF8=""
 TOKEN_START_BLOCK_V1=655223
 TOKEN_ID_V1="20e8e13347a76f6041bf7d31b04a7bbb7e2deb5d95e15ae8619179b3552ca02a"
 USE_FASTMINE="yes"
 ```
 
---------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
 
 
