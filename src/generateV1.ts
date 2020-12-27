@@ -7,13 +7,12 @@ import { BlockNotification, ClientReadableStream,
             GetMempoolResponse, GrpcClient,
             TransactionNotification } from "grpc-bchrpc-node";
 import { IGrpcClient } from "grpc-bchrpc";
-let IGrpcClient = GrpcClient;
-import { BchdNetwork,
-         LocalValidator, ScriptSigP2PK, ScriptSigP2PKH,
+import { BchdNetwork, LocalValidator,
+         ScriptSigP2PK, ScriptSigP2PKH,
          ScriptSigP2SH, Slp, SlpAddressUtxoResult,
-         SlpTransactionDetails, SlpTransactionType, SlpValidator,
-         TransactionHelpers, Utils,
-         Validation } from "slpjs";
+         SlpTransactionDetails, SlpTransactionType,
+         SlpValidator, TransactionHelpers, Utils,
+         Validation } from "slpjs";         
 import { ValidityCache } from "./cache";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -144,7 +143,7 @@ streams.bchdTransactions!.on("data", async (data: TransactionNotification) => {
     const type = data.getType();
     const txn = data.getUnconfirmedTransaction()!.getTransaction()!;
     const outs = txn.getOutputsList();
-    if (Buffer.from(outs[0].getPubkeyScript_asU8()).toString("hex").includes("044d494e5420d6876f0fce603be43f15d34348bb1de1a8d688e1152596543da033a060cff798")) {
+    if (Buffer.from(outs[0].getPubkeyScript_asU8()).toString("hex").includes("044d494e5420bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378")) {
         const ins = txn.getInputsList();
         const asm = BITBOX.Script.toASM(Buffer.from(ins[0].getSignatureScript_asU8())).split(" ");
         try {

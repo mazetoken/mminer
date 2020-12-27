@@ -1,6 +1,6 @@
 ### Mminer 1.0.2 
 
-_Update and tutorial by [B_S_Z](https://t.me/b_s_z)_
+_Update and tutorial by [B_S_Z](https://t.me/b_s_z) - https://mazetoken.github.io_
 
 You can create a mineable SLP tokens (based on Mist covenant contract script) and mine it with Mminer
 
@@ -10,9 +10,9 @@ What is updated:
 
 - Mminer is patched for "bn not an integer" error and "dust input attack" (the patch is from https://gitlab.com/blue_mist/miner)
 
-- package.json - npm packages (e.g. slpjs 0.27.9)
+- package.json - npm packages (e.g. slpjs 0.27.11)
 
-- generateV1.ts - Mminer works with grpc-bchrpc-node 0.11.3* (https://github.com/simpleledgerinc)
+- generateV1.ts - Mminer works with a modified* grpc-bchrpc-node 0.11.3 (https://github.com/simpleledgerinc)
 
 _*SkipSlpValidityChecks is set to "true" and should be set to "false" when BCHD instances support SLP indexing)_
 
@@ -23,7 +23,7 @@ Mminer is tested and it works, but use it at your own risk
 
 Mminer is prepared for mining MAZE, but you can use it to mine other tokens and NFTs (scroll down to tokens environment and replace data in Mminer .env file)
 
-#### IMPORTANT: for NFT1-Group Token mining you need to change the token environment (.env file) and after you run `npm i` and before you run `npm start`, go to node_modules folder in mminer-main directory, go to slpjs folder, go to lib folder and open slpjs.js (in editor, e.g. notepad) and change token type from `0x01` to `0x81` in line 423 (it should look like this: `if (type === void 0) { type = 0x81; }`)
+#### IMPORTANT: for NFT1-Group Token mining you need to change the token environment (.env file) and after you run `npm i` and before you run `npm start`, go to node_modules folder in Mminer main directory, go to slpjs folder, go to lib folder and open slpjs.js (in editor, e.g. notepad) and change token type from `0x01` to `0x81` in line 423 (it should look like this: `if (type === void 0) { type = 0x81; }`)
 
 --------------------------------------------------------------------------------
 
@@ -89,6 +89,12 @@ _*Do not send other BCH to your mining address, otherwise you could pay high fee
 
 `cd mminer-main`
 
+`cd fastmine`
+
+`cmake . && make`
+
+`cd ..`
+
 `npm i`
 
 `npm update` (*optional)
@@ -114,7 +120,7 @@ _*Press Ctrl C to stop the miner_
 
 - Open Windows PowerShell (Windows X) and type commands:
 
-`npm i -g npm@7.0.6`
+`npm i -g npm@7.0.6` (*optional)
 
 _*Ignore errors_
 
@@ -186,7 +192,7 @@ _*You can set fastmine to "no" if you don't want to install CMake (below), but m
 _*Tap: ctrl O enter - to save changes and ctrl X enter - to exit editor_
 
 
-##### Download CMake, but not to the mminer directory (we need a new version of CMake for fastmine). Unfortunately, it will take some time - a few hours, so be patient. You can change the sleep time of your phone display to 30 minutes to make it a little faster. You can skip this if you do not want to mine with fastmine (we do not need fastmine to mine dSLP token - fastmine is set to "no" by default)
+##### Download CMake, but not to the mminer directory. We have  to do this because we need a new version of CMake for fastmine. Unfortunately, it will take some time - a few hours, so be patient. You can change the sleep time of your phone display to 30 minutes to make it a little bit faster. You can skip this if you do not want to mine with fastmine (set fastmine to "no" in Miner .env file)
 
 Type commands:
 
@@ -238,11 +244,21 @@ Start the miner again (if you have closed UserLAnd app) - open the app, type you
 
 ##### NFT child tokens
 
-To create NFT child tokens from mineable NFT1-Group tokens go to ELectron Cash wallet, go to Tokens tab, rigt click on NFT token - create new NFT, choose a name and a symbol for your NFT child token (mined NFT1-Group token will be burned as each child token is created - minted). Before you start freeze your mining coins (all 0.00001870)
+To create NFT child tokens from mineable NFT1-Group tokens go to your Electron Cash SLP wallet, go to Tokens tab, rigt click on NFT token - create new NFT, choose a name and a symbol for your NFT child token (mined NFT1-Group token will be burned as each child token is created - minted). Before you start freeze your mining coins (all 0.00001870)
 
 You do not need to mine NFT1-Group Token constantly. Mine a few blocks and create some NFT child tokens
 
 Always send NFT to SLP NFT compatible wallets (e.g. Electron Cash wallet SLP edition or memo.cash browser wallet)
+
+_"1. An NFT 'Group' token is created first. This is not an NFT itself, but the raw ingredient from which an NFT is created. This is analogous to a stem cell, which is a cell that has not yet chosen to be a specific type of cell (like bone, blood, or nerve cell), but has the potential to become any of them.
+
+2. NFT Group tokens can be created, minted, and sent just like any other kind of SLP token. The reason these are called a 'Group' token is that they represent a class or group of NFTs. So a Group might represent a class of items like swords, paintings, or concert tickets.
+
+3. A NFT Child token is generated by consuming an NFT Group token. NFT Children are the actual NFT tokens and represent specific things with that class, like Excalibur (a sword), the Mona Lisa (a painting), and Row B seat 24 (a concert ticket).
+
+4. NFT Children can be created and sent, but they can not be minted like other SLP tokens."*_
+
+_*This NFT description above (1-4) is from [PSF](https://github.com/Permissionless-Software-Foundation/bch-js-examples/tree/master/applications/slp/nft)  
 
 --------------------------------------------------------------------------------------
 
@@ -256,12 +272,16 @@ _*There will be eight halving events for SLP Token Type 1. Total supply will not
 
 _*NFT1-Group Token mining will probably stop at third halving (rewad reduction) because of 0 decimal places_
 
+_*Change data in Mminer .env file to mine different tokens_
+
 _*Do not paste MINER_COVENANT_V1 from SLP Token Type 1 to NFT1-Group Token_
 
-_*Change data in Mminer .env file to mine different tokens. Use different addressess (WIFs) for different tokens_
+_*Do not forget that, for NFT1-Group Token mining, after you run `npm i` and before you run `npm start`, you should go to node_modules folder in Mminer directory, go to slpjs folder, go to lib folder and open slpjs.js (in editor, e.g. notepad) and change token type from `0x01` to `0x81` in line 423 (it should look like this: `if (type === void 0) { type = 0x81; }`)_
+
+_*I recommend using different addressess (WIFs) for different tokens. Make a backup of .cache file from time to time (to prevent downloading a lot of txids if you reinstall the miner or run it on another pc/laptop/phone)_
 
 
-##### Maze:
+##### Maze (MAZE is the second mineable SLP Token Type 1):
 
 ```
 TOKEN_INIT_REWARD_V1=800000000
@@ -288,35 +308,45 @@ Token Height | Maze Reward
 34560< | ...`
 ```
 
-##### Maze NFT1-Group Token (MAZE NFT is the first mineable NFT, but it is not available for public mining for now):
+##### Maze NFT1-Group Token (MAZE NFT is the first mineable NFT):
 
 ```
 TOKEN_INIT_REWARD_V1=20
-TOKEN_HALVING_INTERVAL_V1=
+TOKEN_HALVING_INTERVAL_V1=21600
 MINER_COVENANT_V1="5779820128947f777601207f75597982012c947f757601687f777678827758947f7576538b7f77765c7982777f011179011179ad011179828c7f756079a8011279bb011479815e7981788c88765b79968b0114795e795279965480880400000000011579bc7e0112790117797eaa765f797f757681008854011a797e56797e170000000000000000396a04534c50000181044d494e54200113797e030102087e54797e0c22020000000000001976a914011879a97e0288ac7e0b220200000000000017a9145379a97e01877e527952797e787eaa607988587901127993b175516b6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6c"
 MINER_DIFFICULTY_V1=3
-TOKEN_START_BLOCK_V1=
+TOKEN_START_BLOCK_V1=661499
 TOKEN_ID_V1="8678ad8c66cdcbdbb6e8f610fda055458b096c0f09a7fb6a18fe098343411f21"
 USE_FASTMINE="yes"
 ```
 
 
-##### Arena NFT1-Group Token:
+#### BHACK - Blind Hackers Group (Maze Universe). 500000 BHACK is "pre-mined" (minted)
+
+```
+TOKEN_INIT_REWARD_V1=10000000
+TOKEN_HALVING_INTERVAL_V1=4320
+MINER_DIFFICULTY_V1=3
+TOKEN_START_BLOCK_V1=667287
+TOKEN_ID_V1="bc3ab6616aecd03ecbff478c882e05df043e8af959f3c3964c9c9d15ba7d55bd"
+USE_FASTMINE="yes"
+```
+
+
+##### BHACK NFT1-Group Token (coming soon):
 
 ```
 MINER_COVENANT_V1="5779820128947f777601207f75597982012c947f757601687f777678827758947f7576538b7f77765c7982777f011179011179ad011179828c7f756079a8011279bb011479815e7981788c88765b79968b0114795e795279965480880400000000011579bc7e0112790117797eaa765f797f757681008854011a797e56797e170000000000000000396a04534c50000181044d494e54200113797e030102087e54797e0c22020000000000001976a914011879a97e0288ac7e0b220200000000000017a9145379a97e01877e527952797e787eaa607988587901127993b175516b6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6c"
-TOKEN_INIT_REWARD_V1=10
-TOKEN_HALVING_INTERVAL_V1=25920
+TOKEN_INIT_REWARD_V1=
+TOKEN_HALVING_INTERVAL_V1=
 MINER_DIFFICULTY_V1=3
-TOKEN_START_BLOCK_V1=665753
-TOKEN_ID_V1="9cc03f37c27ec0334b839f1ed66e07da13ff19d29a497ebbf505e124453831fd"
+TOKEN_START_BLOCK_V1=
+TOKEN_ID_V1=""
 USE_FASTMINE="yes"
-
 ```
-_*You can also download MminerNFT - prepared for mining ARENA NFT1-Group token [here](https://github.com/mazetoken/mining/raw/master/mminernft.zip)
 
 
-##### Mist:
+##### Mist (Mist is the first mineable SLP Token Type 1, created by Kasumi):
 
 ```
 TOKEN_INIT_REWARD_V1=400000000
@@ -327,7 +357,8 @@ TOKEN_ID_V1="d6876f0fce603be43f15d34348bb1de1a8d688e1152596543da033a060cff798"
 USE_FASTMINE="yes"
 ```
 
-##### dSLP:
+
+##### dSLP (decentralized SLP) - an universal SLP Token Type 1:
 
 ```
 TOKEN_INIT_REWARD_V1=2000000
@@ -335,13 +366,13 @@ TOKEN_HALVING_INTERVAL_V1=6480
 MINER_DIFFICULTY_V1=2
 TOKEN_START_BLOCK_V1=653104
 TOKEN_ID_V1="5aa6c9485f746cddfb222cba6e215ab2b2d1a02f3c2506774b570ed40c1206e8"
-USE_FASTMINE="no"
+USE_FASTMINE="yes"
 ```
-_*You can set fastmine to "yes" for dSLP, but you will have to use this [miner](https://github.com/mazetoken/mining/raw/master/dslpmminer.zip)_
+_*To enable fastmine for dSLP go to Mminer src folder, open generateV1.ts in any editor, go to line 443 and remove `|| solhash[2] !== 0x00`. It should look like this: `if (solhash[0] !== 0x00 || solhash[1] !== 0x00) {`_
 
 dSLP reward schedule:
 
-Token Height | Maze Reward
+Token Height | dSLP Reward
 
 ```
 1-6479 | 200 dSLP
@@ -355,14 +386,42 @@ Token Height | Maze Reward
 51840< | ...`
 ```
 
-##### BTCL:
+
+##### dSLP NFT1-Group Token (coming soon):
 
 ```
-TOKEN_INIT_REWARD_V1=800000000
-TOKEN_HALVING_INTERVAL_V1=4320
+MINER_COVENANT_V1="5779820128947f777601207f75597982012c947f757601687f777678827758947f7576538b7f77765c7982777f011179011179ad011179828c7f756079a8011279bb011479815e7981788c88765b79968b0114795e795279965480880400000000011579bc7e0112790117797eaa765f797f757681008854011a797e56797e170000000000000000396a04534c50000181044d494e54200113797e030102087e54797e0c22020000000000001976a914011879a97e0288ac7e0b220200000000000017a9145379a97e01877e527952797e787eaa607988587901127993b175516b6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6c"
+TOKEN_INIT_REWARD_V1=
+TOKEN_HALVING_INTERVAL_V1=
 MINER_DIFFICULTY_V1=3
-TOKEN_START_BLOCK_V1=655223
-TOKEN_ID_V1="20e8e13347a76f6041bf7d31b04a7bbb7e2deb5d95e15ae8619179b3552ca02a"
+TOKEN_START_BLOCK_V1=
+TOKEN_ID_V1=""
+USE_FASTMINE="yes"
+```
+
+
+##### ARENA NFT1-Group Token:
+
+```
+MINER_COVENANT_V1="5779820128947f777601207f75597982012c947f757601687f777678827758947f7576538b7f77765c7982777f011179011179ad011179828c7f756079a8011279bb011479815e7981788c88765b79968b0114795e795279965480880400000000011579bc7e0112790117797eaa765f797f757681008854011a797e56797e170000000000000000396a04534c50000181044d494e54200113797e030102087e54797e0c22020000000000001976a914011879a97e0288ac7e0b220200000000000017a9145379a97e01877e527952797e787eaa607988587901127993b175516b6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6c"
+TOKEN_INIT_REWARD_V1=10
+TOKEN_HALVING_INTERVAL_V1=25920
+MINER_DIFFICULTY_V1=3
+TOKEN_START_BLOCK_V1=665753
+TOKEN_ID_V1="9cc03f37c27ec0334b839f1ed66e07da13ff19d29a497ebbf505e124453831fd"
+USE_FASTMINE="yes"
+```
+
+
+##### ZOMBIE NFT1-Group Token:
+
+```
+MINER_COVENANT_V1="5779820128947f777601207f75597982012c947f757601687f777678827758947f7576538b7f77765c7982777f011179011179ad011179828c7f756079a8011279bb011479815e7981788c88765b79968b0114795e795279965480880400000000011579bc7e0112790117797eaa765f797f757681008854011a797e56797e170000000000000000396a04534c50000181044d494e54200113797e030102087e54797e0c22020000000000001976a914011879a97e0288ac7e0b220200000000000017a9145379a97e01877e527952797e787eaa607988587901127993b175516b6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6c"
+TOKEN_INIT_REWARD_V1=10
+TOKEN_HALVING_INTERVAL_V1=25920
+MINER_DIFFICULTY_V1=3
+TOKEN_START_BLOCK_V1=662762
+TOKEN_ID_V1="de6339df4ea6ff1b999c3c16b16764f3f749817d8a160a1cac29a1171f7ad639"
 USE_FASTMINE="yes"
 ```
 
