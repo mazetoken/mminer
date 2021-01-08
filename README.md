@@ -19,7 +19,7 @@ _*SkipSlpValidityChecks is set to "true" and should be set to "false" when BCHD 
 - NFT1-Group Token mining
 
 
-Mminer is tested and it works, but use it at your own risk
+Mminer is tested and it works, but use it at your own risk. If you are not sure about this miner, start with the original miner from https://mistcoin.org. The miner is not an "out of the box" application and may not be for everyone
 
 Mminer is prepared for mining MAZE, but you can use it to mine other tokens and NFTs (scroll down to tokens environment and replace data in Mminer .env file)
 
@@ -27,7 +27,9 @@ Mminer is prepared for mining MAZE, but you can use it to mine other tokens and 
 
 --------------------------------------------------------------------------------
 
-### Mining tutorial (Windows, Linux and Android phone)
+### Mining tutorial for beginners (Windows 10, Linux Ubuntu and Android phone)
+
+You need to have some basic knowledge how to use Windows or Linux and a command line. This tutorial may not be for perfect (my english is not perfect, too), so use your intuition. It`s not tested on "fresh" Windows and you may need some other applications or drivers installed, that I`m not aware
 
 _*You can also check [this](https://github.com/blockparty-sh/mist-miner) tutorial_
 
@@ -35,39 +37,35 @@ _*You can also check [this](https://github.com/blockparty-sh/mist-miner) tutoria
 
 - Download [Electron Cash SLP wallet](https://simpleledger.cash/project/electron-cash-slp-edition/)
 
-- Create two wallets in Electron Cash, e.g. wallet_1 (mining wallet) and wallet_2 (funding wallet)
+- Create a standard wallet in Electron Cash. Go to Addresses tab and choose two addresses (one for funding and the second for mining; you can give them a label). You can also create two separate wallets - one for funding and the second for mining - it`s up to you
 
-_*You can use only one wallet with two addresses (one for mining and one for funding), but you will have to be careful when funding your mining address or withdrawing - you will need to freeze your mining coins in the mining address each time you interact with funding address_
+- Send some BCH (e.g. 0.00020000) to your funding address
 
-- Open wallet_2 (funding wallet), choose an address and send some BCH (e.g. 0.00025000) to this address
-
-- Open wallet_1 (mining wallet), choose a mining address for your mining coins (0.00001870). Send, to the mining address, from wallet_2, multiple 0.00001870 BCH in one transanction e.g. - paste in send tab - pay to field: 
+- From your funding address send, to your mining address, multiple 0.00001870 BCH in one transanction (go to Send tab - Pay to field). It should look like this: 
 
 ```
-simpleledger:yourminingaddress,0.00001870
-simpleledger:yourminingaddress,0.00001870
-simpleledger:yourminingaddress,0.00001870
-simpleledger:yourminingaddress,0.00001870
-simpleledger:yourminingaddress,0.00001870
-simpleledger:yourminingaddress,0.00001870
-simpleledger:yourminingaddress,0.00001870
-simpleledger:yourminingaddress,0.00001870
-simpleledger:yourminingaddress,0.00001870
-simpleledger:yourminingaddress,0.00001870
+simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn,0.00001870
+simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn,0.00001870
+simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn,0.00001870
+simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn,0.00001870
+simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn,0.00001870
+simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn,0.00001870
+simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn,0.00001870
+simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn,0.00001870
+simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn,0.00001870
+simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn,0.00001870
 ```
 
-_*You can send more ^ later_
+_*Replace simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn with your own mining address. You can send more UTXOs later._
 
-- Right click on your mining address (in wallet_1) and get your private key (WIF)
+- Right click on your mining address and get your private key (WIF). Save it somewhere (you will need to paste it in the miner .env file)
 
-_*Do not send other BCH to your mining address, otherwise you could pay high fee or you will not mine anything_
+_*Do not send other BCH to your mining address, otherwise you could pay high fee or you will not mine anything. Freeze your mining coins (select all 0.00001870 UTXOs and rigt click on it to freeze) before you send any tokens from your wallet to another wallet_
 
 
-#### Mining on Windows
+#### Mining on Windows 10
 
 ##### First method:
-
-- Download [Mminer](https://github.com/mazetoken/mminer/archive/main.zip). Copy unzipped mminer-main folder to drive C. Open the folder and open .env file in notepad. Paste your WIF="..." in .env. Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank (or paste BCHD_GRPC_URL="..." if you know any). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
 
 - Open Windows Control panel - go to "Programs" - go to "Turn Windows features on or off" - select "Windows Subsystem for Linux" and check the box, click ok and reboot Windows
 
@@ -77,7 +75,7 @@ _*Do not send other BCH to your mining address, otherwise you could pay high fee
 
 - Setup your username and password
 
-- In a command line type commands:
+- In a command line type commands (press enter after every command):
 
 `cd /mnt/c`
 
@@ -87,7 +85,9 @@ _*Do not send other BCH to your mining address, otherwise you could pay high fee
 
 `sudo apt-get install git cmake gcc g++ make`
 
-`cd mminer-main`
+`git clone https://github.com/mazetoken/mminer.git`
+
+`cd mminer`
 
 `cd fastmine`
 
@@ -97,53 +97,53 @@ _*Do not send other BCH to your mining address, otherwise you could pay high fee
 
 `npm i`
 
-`npm update` (*optional)
+_*Ignore errors (if any appears). Do not run npm audit fix!_
 
-_*Ignore errors. Do not run npm audit fix!_
+Open windows explorer (no need to close Ubuntu command line) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank (or paste BCHD_GRPC_URL="..." if you know any). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
+
+Go back to Ubuntu command line and type command:
 
 `npm start`
 
 _*Txid will be downloaded first (it may take a while) and then mining will start_
 
-_*Press Ctrl C to stop the miner_
+_*Press Ctrl C if you want to stop the miner_
 
 
 ##### Second method:
 
 - Make sure that Microsoft Visual C++ Redistributable is installed on your system. If it is not, you can download it from [here](https://aka.ms/vs/16/release/VC_redist.x86.exe) and [here](https://aka.ms/vs/16/release/VC_redist.x64.exe) - you need to install both
 
-- Download and install [Nodejs](https://nodejs.org/en/) 14.15.0
+- Download and install [Nodejs](https://nodejs.org/en/)
 
 - Download and install [Git](https://gitforwindows.org/)
 
-- Download [Mminer](https://github.com/mazetoken/mminer/archive/main.zip). Copy unzipped mminer-main folder to drive C. Open the folder and open .env file in notepad. Paste your WIF="..." in .env. Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank (or paste BCHD_GRPC_URL="..." if you know any). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
-
-- Open Windows PowerShell (Windows X) and type commands:
-
-`npm i -g npm@7.0.6` (*optional)
-
-_*Ignore errors_
+- Open Windows PowerShell (press Windows key and X) and type commands (press enter after every command):
 
 `cd ..`
 
 `cd  ..`
 
-`cd mminer-main`
+`git clone https://github.com/mazetoken/mminer.git`
+
+`cd mminer`
 
 `npm i`
 
-_*Ignore errors. Do not run npm audit fix !_
+_*Ignore warnings (if any appears). Do not run npm audit fix !_
 
-`npm update` (*optional)
+Open windows explorer (no need to close PowerShell) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank (or paste BCHD_GRPC_URL="..." if you know any). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
+
+Go back to PowerShell and type command:
 
 `npm start`
 
 _*Txid will be downloaded first (it may take a while) and then mining will start_
 
-_*Press Ctrl C and type Y to stop the miner_
+_*Press Ctrl C and type Y if you want to stop the the miner_
 
 
-#### Mining on Android phone
+#### Mining on Android phone with Linux Ubuntu
 
 _*You may need 2GB ram_
 
@@ -169,7 +169,7 @@ _*You may need 2GB ram_
 
 `sudo npm install -g npm@7.0.6`
 
-_*Ignore errors. Do not run npm audit fix !__
+_*Ignore errors (if any appears). Do not run npm audit fix !__
 
 `sudo apt-get install cmake gcc g++ make`
 
@@ -181,7 +181,7 @@ _*Ignore errors. Do not run npm audit fix !__
 
 `sudo nano .env`
 
-_*Type/paste your WIF="..."_
+_*Type/paste your WIF (your mining address private key) here "..." (WIF="...")_
 
 _*Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank (or paste BCHD_GRPC_URL="..." if you know any)_
 
@@ -244,7 +244,7 @@ Start the miner again (if you have closed UserLAnd app) - open the app, type you
 
 ##### NFT child tokens
 
-To create NFT child tokens from mineable NFT1-Group tokens go to your Electron Cash SLP wallet, go to Tokens tab, rigt click on NFT token - create new NFT, choose a name and a symbol for your NFT child token (mined NFT1-Group token will be burned as each child token is created - minted). Before you start freeze your mining coins (all 0.00001870)
+To create NFT child tokens from mineable NFT1-Group tokens go to your Electron Cash SLP wallet, go to Tokens tab, rigt click on NFT token - create new NFT, choose a name and a symbol for your NFT child token (mined NFT1-Group token will be burned as each child token is created - minted). Before you start freeze your mining coins (all 0.00001870 UTXOs)
 
 You do not need to mine NFT1-Group Token constantly. Mine a few blocks and create some NFT child tokens
 
@@ -270,7 +270,7 @@ _*This NFT description above (1-4) is from [PSF](https://github.com/Permissionle
 
 _*There will be eight halving events for SLP Token Type 1. Total supply will not be higher than 21 million_
 
-_*NFT1-Group Token mining will probably stop at third halving (rewad reduction) because of 0 decimal places_
+_*NFT1-Group Token mining will probably stop at third halving (reward reduction) because of 0 decimal places_
 
 _*Change data in Mminer .env file to mine different tokens_
 
@@ -278,7 +278,7 @@ _*Do not paste MINER_COVENANT_V1 from SLP Token Type 1 to NFT1-Group Token_
 
 _*Do not forget that, for NFT1-Group Token mining, after you run `npm i` and before you run `npm start`, you should go to node_modules folder in Mminer directory, go to slpjs folder, go to lib folder and open slpjs.js (in editor, e.g. notepad) and change token type from `0x01` to `0x81` in line 423 (it should look like this: `if (type === void 0) { type = 0x81; }`)_
 
-_*I recommend using different addressess (WIFs) for different tokens. Make a backup of .cache file from time to time (to prevent downloading a lot of txids if you reinstall the miner or run it on another pc/laptop/phone)_
+_*I recommend using different addressess (WIFs) for different tokens (but it`s not necessary). Make a backup of .cache file from time to time (to prevent downloading a lot of txids if you reinstall the miner or run it on another pc/laptop/phone)_
 
 
 ##### Maze (MAZE is the second mineable SLP Token Type 1):
