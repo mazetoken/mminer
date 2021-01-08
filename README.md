@@ -29,7 +29,7 @@ Mminer is prepared for mining MAZE, but you can use it to mine other tokens and 
 
 ### Mining tutorial for beginners (Windows 10, Linux Ubuntu and Android phone)
 
-You need to have some basic knowledge how to use Windows or Linux and a command line. This tutorial may not be for perfect (my english is not perfect, too), so use your intuition. It`s not tested on "fresh" Windows and you may need some other applications or drivers installed, that I`m not aware
+You need to have some basic knowledge how to use Windows or Linux and a command line. This tutorial may not be for perfect (my english is not perfect, too), so use your intuition. It is not tested on "fresh" Windows and you may need some other applications or drivers installed, that I am not aware
 
 _*You can also check [this](https://github.com/blockparty-sh/mist-miner) tutorial_
 
