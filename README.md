@@ -27,7 +27,7 @@ Mminer is prepared for mining MAZE, but you can use it to mine other tokens and 
 
 --------------------------------------------------------------------------------
 
-### Mining tutorial for beginners (Windows 10, Linux Ubuntu and Android phone)
+### Mining tutorial for beginners (Ubuntu Linux on Windows 10, Windows 10 and Kali Linux on Android phone)
 
 You need to have some basic knowledge how to use Windows or Linux and a command line. This tutorial may not be for perfect (my english is not perfect, too), so use your intuition. It is not tested on "fresh" Windows and you may need some other applications or drivers installed, that I am not aware
 
@@ -143,7 +143,7 @@ _*Txid will be downloaded first (it may take a while) and then mining will start
 _*Press Ctrl C and type Y if you want to stop the the miner_
 
 
-#### Mining on Android phone with Linux Ubuntu
+#### Mining on Android phone with Kali Linux
 
 _*You may need 2GB ram_
 
@@ -175,6 +175,10 @@ _*You may need 2GB ram_
 
 `sudo apt-get install nano zip unzip`
 
+`sudo apt update`
+
+`sudo apt upgrade`
+
 `git clone https://github.com/mazetoken/mminer.git`
 
 `cd mminer`
@@ -194,8 +198,6 @@ _*Tap: ctrl O enter - to save changes and ctrl X enter - to exit editor_
 `cmake . && make`
 
 `cd ..`
-
-##### Install and start the miner. Type commands:
 
 `npm i`
 
