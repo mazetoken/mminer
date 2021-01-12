@@ -99,7 +99,7 @@ _*Do not send other BCH to your mining address, otherwise you could pay high fee
 
 _*Ignore warnings (if any appears). Do not run npm audit fix!_
 
-Open windows explorer (no need to close Ubuntu command line) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank (or paste BCHD_GRPC_URL="..." if you know any). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
+Open windows explorer (no need to close Ubuntu command line) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank / no url (or paste BCHD_GRPC_URL="..." if you know any). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
 
 Go back to Ubuntu command line and type command:
 
@@ -132,7 +132,7 @@ _*Press Ctrl C if you want to stop the miner_
 
 _*Ignore warnings (if any appears). Do not run npm audit fix !_
 
-Open windows explorer (no need to close PowerShell) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank (or paste BCHD_GRPC_URL="..." if you know any). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
+Open windows explorer (no need to close PowerShell) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank /no url (or paste BCHD_GRPC_URL="..." if you know any). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
 
 Go back to PowerShell and type command:
 
@@ -147,19 +147,21 @@ _*Press Ctrl C and type Y if you want to stop the the miner_
 
 _*You may need 2GB ram_
 
+_*It was tested on an old Android 7 phone_
+
 ##### Go to Google Play Store and download UserLAnd app
 
 - Install the app
 
 - Open the app and install Kali
 
-- Setup your username and passwords
+- Setup your username and passwords (use a short username and password - e.g. 54321 - you can change the password later when you get used to linux)
 
 - Choose SSH
 
-- change password if asked (can be the same password ;-) 
+- change password if asked (can be the same password e.g. 54321 ;-) 
 
-- In a command line type your password (it is invisible) and type or paste commands (one by one):
+- In a command line type your password (it is invisible) and when you are in, type or paste commands (one by one, tap enter after every command; you can open the tutorial in your browser to make it easier):
 
 `sudo apt update`
 
@@ -167,13 +169,13 @@ _*You may need 2GB ram_
 
 `sudo apt-get install git wget curl`
 
-`curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -`
-
-`sudo apt-get install -y nodejs`
-
 `sudo apt-get install cmake gcc g++ make`
 
 `sudo apt-get install nano zip unzip`
+
+`curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -`
+
+`sudo apt-get install -y nodejs`
 
 `sudo apt update`
 
@@ -183,21 +185,21 @@ _*You may need 2GB ram_
 
 `cd mminer`
 
-`sudo nano .env`
-
-_*Type/paste your WIF (your mining address private key) here "..." (WIF="...")_
-
-_*Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank (or paste BCHD_GRPC_URL="..." if you know any)_
-
-_*You can type your mining tag (your nick or whatever) in MINER_UTF8="..."_
-
-_*Tap: ctrl O enter - to save changes and ctrl X enter - to exit editor_
-
 `cd fastmine`
 
 `cmake . && make`
 
 `cd ..`
+
+`sudo nano .env`
+
+_*Type/paste your WIF (your mining address private key) here "..." (WIF="...")_
+
+_*Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank/no url (or paste BCHD_GRPC_URL="..." if you know any)_
+
+_*You can type your mining tag (your nick or whatever) in MINER_UTF8="..."_
+
+_*Tap: ctrl O enter - to save changes and ctrl X enter - to exit editor_
 
 `npm i`
 
