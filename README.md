@@ -10,7 +10,7 @@ What is updated:
 
 - Mminer is patched for "bn not an integer" error and "dust input attack" (the patch is from https://gitlab.com/blue_mist/miner)
 
-- package.json - npm packages (e.g. slpjs 0.27.11)
+- package.json - npm packages
 
 - generateV1.ts - Mminer works with a modified* grpc-bchrpc-node 0.11.3 (https://github.com/simpleledgerinc)
 
@@ -27,7 +27,7 @@ Mminer is prepared for mining MAZE, but you can use it to mine other tokens and 
 
 --------------------------------------------------------------------------------
 
-### Mining tutorial for beginners (Ubuntu Linux on Windows 10, Windows 10 and Kali Linux on Android phone)
+### Mining tutorial for beginners (Kali Linux or Ubuntu on Windows 10, Windows 10 and Kali Linux on Android phone)
 
 You need to have some basic knowledge how to use Windows or Linux and a command line. This tutorial may not be for perfect (my english is not perfect, too), so use your intuition. It is not tested on "fresh" Windows and you may need some other applications or drivers installed, that I am not aware
 
@@ -69,19 +69,23 @@ _*Do not send other BCH to your mining address, otherwise you could pay high fee
 
 - Open Windows Control panel - go to "Programs" - go to "Turn Windows features on or off" - select "Windows Subsystem for Linux" and check the box, click ok and reboot Windows
 
-- Download and install Ubuntu 20.4 LTS from Microsoft Store (type ubuntu in search bar)
+- Download and install Kali Linux or Ubuntu 20.4 LTS from Microsoft Store
 
-- Open Ubuntu command line (Start menu - Ubuntu)
+- Open Kali Linux or Ubuntu command line (Start menu - Kali or Ubuntu)
 
 - Setup your username and password
 
-- In a command line type commands (press enter after every command):
+- In a command line type commands (press enter after every command; commands are the same for Kali and Ubuntu):
 
 `cd /mnt/c`
 
 `sudo apt update`
 
 `sudo apt upgrade`
+
+`curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -`
+
+`sudo apt-get install -y nodejs`
 
 `sudo apt-get install git cmake gcc g++ make`
 
@@ -97,20 +101,26 @@ _*Do not send other BCH to your mining address, otherwise you could pay high fee
 
 `npm i`
 
-_*Ignore warnings (if any appears). Do not run npm audit fix!_
+_*Ignore errors/warnings (if any appears). Do not run npm audit fix!_
 
-Open windows explorer (no need to close Ubuntu command line) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank / no url (or paste BCHD_GRPC_URL="..." if you know any). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
+Leave the command line (no need to close it). Open windows explorer (no need to close a command line) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank / no url (or paste BCHD_GRPC_URL="..." if you know any). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
 
-Go back to Ubuntu command line and type command:
+Go back to the command line and type commands:
+
+`export NODE_OPTIONS=--max_old_space_size=4096`
 
 `npm start`
 
-_*Txid will be downloaded first (it may take a while) and then mining will start_
+_*Txids will be downloaded first (it may take a while) and then mining will start_
 
-_*Press Ctrl C if you want to stop the miner_
+_*Press Ctrl C if you want to stop the miner. Type `npm start` to start again_
+
+_* Run command: `sudo apt update` from time to time to update Linux_
 
 
 ##### Second method:
+
+- Javascript heap out of memory error may appear (while downloading txids for some tokens) and mining won`t work. Try a different token or use Linux method (above). It`s fixed for Linux, but not for Windows yet
 
 - Make sure that Microsoft Visual C++ Redistributable is installed on your system. If it is not, you can download it from [here](https://aka.ms/vs/16/release/VC_redist.x86.exe) and [here](https://aka.ms/vs/16/release/VC_redist.x64.exe) - you need to install both
 
@@ -130,22 +140,22 @@ _*Press Ctrl C if you want to stop the miner_
 
 `npm i`
 
-_*Ignore warnings (if any appears). Do not run npm audit fix !_
+_*Ignore errors/warnings (if any appears). Do not run npm audit fix !_
 
-Open windows explorer (no need to close PowerShell) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank /no url (or paste BCHD_GRPC_URL="..." if you know any). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
+Leave PowerShell (no need to close it). Open windows explorer (no need to close PowerShell) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank /no url (or paste BCHD_GRPC_URL="..." if you know any). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
 
 Go back to PowerShell and type command:
 
 `npm start`
 
-_*Txid will be downloaded first (it may take a while) and then mining will start_
+_*Txids will be downloaded first (it may take a while) and then mining will start_
 
 _*Press Ctrl C and type Y if you want to stop the the miner_
 
 
 #### Mining on Android phone with Kali Linux
 
-_*You may need 2GB ram_
+_*You may need 2GB RAM, but you can try with less RAM_
 
 _*It was tested on an old Android 7 phone_
 
@@ -153,15 +163,15 @@ _*It was tested on an old Android 7 phone_
 
 - Install the app
 
-- Open the app and install Kali
+- Open the app and install Kali (not Ubuntu - fastmine does not work well with Ubuntu on Android)
 
-- Setup your username and passwords (use a short username and password - e.g. 54321 - you can change the password later when you get used to linux)
+- Setup your username and passwords (use a short username and password - e.g. 54321 - you can change the password later when you get used to Linux)
 
 - Choose SSH
 
 - change password if asked (can be the same password e.g. 54321 ;-) 
 
-- In a command line type your password (it is invisible) and when you are in, type or paste commands (one by one, tap enter after every command; you can open the tutorial in your browser to make it easier):
+- In a command line type your password (it is invisible) and when you are in, type or paste commands (one by one, tap enter after every command, type Y when asked; you can open the tutorial in your browser to make it easier):
 
 `sudo apt update`
 
@@ -169,17 +179,13 @@ _*It was tested on an old Android 7 phone_
 
 `sudo apt-get install git wget curl`
 
-`sudo apt-get install cmake gcc g++ make`
-
-`sudo apt-get install nano zip unzip`
-
 `curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -`
 
 `sudo apt-get install -y nodejs`
 
-`sudo apt update`
+`sudo apt-get install cmake gcc g++ make`
 
-`sudo apt upgrade`
+`sudo apt-get install nano zip unzip`
 
 `git clone https://github.com/mazetoken/mminer.git`
 
@@ -203,13 +209,13 @@ _*Tap: ctrl O enter - to save changes and ctrl X enter - to exit editor_
 
 `npm i`
 
-_*Ignore warnings (if any appears). Do not run npm audit fix !_
+_*Ignore errors/warnings (if any appears). Do not run npm audit fix !_
+
+`export NODE_OPTIONS=--max_old_space_size=2048`
 
 `npm start`
 
-_*Txid will be downloaded first (it may take a while) and then mining will start_
-
-_*Javascript heap out of memory error may appear. You will need to setup and run the miner on desktop and download .cache file from mminer-main folder to mminer directory in your phone_
+_*Txids will be downloaded first (it may take a while) and then mining will start_
 
 _*Tap Ctrl C (to stop the miner)_
 
@@ -218,6 +224,8 @@ Start the miner again (if you closed UserLAnd app) - open the app, type your pas
 `cd mminer`
 
 `npm start`
+
+_* Run command: `sudo apt update` from time to time to update Linux_
 
 --------------------------------------------------------------------------------------
 
@@ -273,7 +281,7 @@ Token Height | Maze Reward
 12960-17279 | 200
 17280-21599 | 160
 21600-25919 | 133,333333
-25920-30239 | 114,292929
+25920-30239 | 114,285714
 30240-34559 | 100
 34560< | ...`
 ```
