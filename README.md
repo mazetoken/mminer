@@ -2,7 +2,7 @@
 
 _Update and tutorial by [B_S_Z](https://t.me/b_s_z) - https://mazetoken.github.io_
 
-You can create a mineable SLP tokens (based on Mist covenant contract script) and mine it with Mminer
+You can create a mineable SLP tokens (based on Mistcoin covenant contract script) and mine it with Mminer
 
 Mminer is an updated version of Mist miner - bchd_mist_miner_v1 (https://mistcoin.org)
 
@@ -14,7 +14,7 @@ What is updated:
 
 - generateV1.ts - Mminer works with a modified* grpc-bchrpc-node 0.11.3 (https://github.com/simpleledgerinc)
 
-_*SkipSlpValidityChecks is set to "true" and should be set to "false" when BCHD instances support SLP indexing)_
+_*SkipSlpValidityChecks is set to "true". If BCHD instances support SLP indexing you can install the new version of grpc-bchrpc-node `npm i grpc-bchrpc-node@0.11.5`_
 
 - NFT1-Group Token mining
 
@@ -25,11 +25,21 @@ Mminer is prepared for mining MAZE, but you can use it to mine other tokens and 
 
 #### IMPORTANT: for NFT1-Group Token mining you need to change the token environment (.env file) and after you run `npm i` and before you run `npm start`, go to node_modules folder in Mminer main directory, go to slpjs folder, go to lib folder and open slpjs.js (in editor, e.g. notepad) and change token type from `0x01` to `0x81` in line 423 (it should look like this: `if (type === void 0) { type = 0x81; }`)
 
+Known public BCHD servers: 
+
+```
+bchd.greyh.at:8335
+bchd.imaginary.cash:8335
+bchd.fountainhead.cash:443
+```
+
+_* Make a backup of .cache file from time to time (to prevent downloading a lot of txids if you reinstall the miner or run it on another pc/laptop/phone)_
+
 --------------------------------------------------------------------------------
 
-### Mining tutorial for beginners (Kali Linux or Ubuntu on Windows 10, Windows 10 and Kali Linux on Android phone)
+### Mining tutorial (Kali Linux or Ubuntu on Windows 10, Windows 10 and Kali Linux on Android phone)
 
-You need to have some basic knowledge how to use Windows or Linux and a command line. This tutorial may not be for perfect (my english is not perfect, too), so use your intuition. It is not tested on "fresh" Windows and you may need some other applications or drivers installed, that I am not aware
+You need to have some basic knowledge how to use Windows or Linux and a command line. This tutorial may not be for perfect, so use your intuition. It is not tested on "fresh" Windows and you may need some other applications or drivers installed, that I am not aware
 
 _*You can also check [this](https://github.com/blockparty-sh/mist-miner) tutorial_
 
@@ -61,6 +71,16 @@ _*Replace simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn with your own 
 - Right click on your mining address and get your private key (WIF). Save it somewhere (you will need to paste it in the miner .env file)
 
 _*Do not send other BCH to your mining address, otherwise you could pay high fee or you will not mine anything. Freeze your mining coins (select all 0.00001870 UTXOs and rigt click on it to freeze) before you send any tokens from your wallet to another wallet_
+
+#### Install Nodejs and other sofware
+
+- Make sure that Microsoft Visual C++ Redistributable is installed on your system. If it is not, you can download it from [here](https://aka.ms/vs/16/release/VC_redist.x86.exe) and [here](https://aka.ms/vs/16/release/VC_redist.x64.exe) - you need to install both
+
+- Download and install the latest [Nodejs 14.x LTS](https://nodejs.org/en/) with additional software
+
+_You should see that eg. visualstudio2017 build tools, python 3, chocolatey are being installed_
+
+- Download and install [Git](https://gitforwindows.org/)
 
 
 #### Mining on Windows 10
@@ -101,9 +121,9 @@ _*Do not send other BCH to your mining address, otherwise you could pay high fee
 
 `npm i`
 
-_*Ignore errors/warnings (if any appears). Do not run npm audit fix!_
+_*Ignore errors/warnings (if any appears eg. keccak and secp256k1 ; it is because of npm v.6x). Do not run npm audit fix!_
 
-Leave the command line (no need to close it). Open windows explorer (no need to close a command line) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank / no url (or paste BCHD_GRPC_URL="..." if you know any). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
+Open windows explorer (no need to close a command line) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" empty / no url (or paste known url in BCHD_GRPC_URL="..."). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
 
 Go back to the command line and type commands:
 
@@ -120,14 +140,6 @@ _* Run command: `sudo apt update` from time to time to update Linux_
 
 ##### Second method:
 
-- Javascript heap out of memory error may appear (while downloading txids for some tokens) and mining won`t work. Try a different token or use Linux method (above). It`s fixed for Linux, but not for Windows yet
-
-- Make sure that Microsoft Visual C++ Redistributable is installed on your system. If it is not, you can download it from [here](https://aka.ms/vs/16/release/VC_redist.x86.exe) and [here](https://aka.ms/vs/16/release/VC_redist.x64.exe) - you need to install both
-
-- Download and install [Nodejs](https://nodejs.org/en/)
-
-- Download and install [Git](https://gitforwindows.org/)
-
 - Open Windows PowerShell (press Windows key and X) and type commands (press enter after every command):
 
 `cd ..`
@@ -140,11 +152,13 @@ _* Run command: `sudo apt update` from time to time to update Linux_
 
 `npm i`
 
-_*Ignore errors/warnings (if any appears). Do not run npm audit fix !_
+_*Ignore errors/warnings (if any eg. keccak and secp256k1 ; it is because of npm v.6x). Do not run npm audit fix !_
 
-Leave PowerShell (no need to close it). Open windows explorer (no need to close PowerShell) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank /no url (or paste BCHD_GRPC_URL="..." if you know any). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
+Open windows explorer (no need to close PowerShell) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" empty /no url (or paste known url in BCHD_GRPC_URL="..."). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
 
-Go back to PowerShell and type command:
+Go back to PowerShell and type commands:
+
+`$env:NODE_OPTIONS="--max-old-space-size=4096"`
 
 `npm start`
 
@@ -155,15 +169,13 @@ _*Press Ctrl C and type Y if you want to stop the the miner_
 
 #### Mining on Android phone with Kali Linux
 
-_*You may need 2GB RAM, but you can try with less RAM_
-
-_*It was tested on an old Android 7 phone_
+_*You may need at least 2GB RAM_
 
 ##### Go to Google Play Store and download UserLAnd app
 
 - Install the app
 
-- Open the app and install Kali (not Ubuntu - fastmine does not work well with Ubuntu on Android)
+- Open the app and install Kali Linux (not Ubuntu - fastmine does not work well with Ubuntu on Android)
 
 - Setup your username and passwords (use a short username and password - e.g. 54321 - you can change the password later when you get used to Linux)
 
@@ -201,7 +213,7 @@ _*It was tested on an old Android 7 phone_
 
 _*Type/paste your WIF (your mining address private key) here "..." (WIF="...")_
 
-_*Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" blank/no url (or paste BCHD_GRPC_URL="..." if you know any)_
+_*Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" empty/no url (or paste known url in BCHD_GRPC_URL="...")_
 
 _*You can type your mining tag (your nick or whatever) in MINER_UTF8="..."_
 
@@ -209,13 +221,13 @@ _*Tap: ctrl O enter - to save changes and ctrl X enter - to exit editor_
 
 `npm i`
 
-_*Ignore errors/warnings (if any appears). Do not run npm audit fix !_
+_*Ignore errors/warnings (if any appears eg. keccak and secp256k1 ; it is because of npm v.6x). Do not run npm audit fix !_
 
 `export NODE_OPTIONS=--max_old_space_size=2048`
 
 `npm start`
 
-_*Txids will be downloaded first (it may take a while) and then mining will start_
+_*Txids will be downloaded first (it may take a while) and then mining will start. If you get Javasrcipt heap out of memory error or txids downloading is "killed", you may need to install the miner on desktop first and download .cache file to your phone miner directory (you can use `wget` command)_
 
 _*Tap Ctrl C (to stop the miner)_
 
@@ -235,11 +247,11 @@ To create NFT child tokens from mineable NFT1-Group tokens go to your Electron C
 
 You do not need to mine NFT1-Group Token constantly. Mine a few blocks and create some NFT child tokens
 
-Always send NFT to SLP NFT compatible wallets (e.g. Electron Cash wallet SLP edition or memo.cash browser wallet)
+Always send NFT to SLP NFT compatible wallets (e.g. Electron Cash wallet SLP edition Zapit wallet or Memo.cash browser wallet)
 
 --------------------------------------------------------------------------------------
 
-#### If you need any help, ask in Maze Community [Group](https://t.me/mazemining)
+#### If you need any help, ask in Maze SLP Token [Group](https://t.me/mazeslptoken)
 
 --------------------------------------------------------------------------------------
 

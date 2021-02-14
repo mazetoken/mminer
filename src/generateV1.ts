@@ -4,8 +4,8 @@ import BigNumber from "bignumber.js";
 import { BITBOX as BITBOXSDK, ECPair } from "bitbox-sdk";
 import * as crypto from "crypto";
 import { BlockNotification, ClientReadableStream,
-            GetMempoolResponse, GrpcClient,
-            TransactionNotification } from "grpc-bchrpc-node";           
+         GetMempoolResponse, GrpcClient,
+         TransactionNotification } from "grpc-bchrpc-node";           
 import { BchdNetwork,
          LocalValidator, ScriptSigP2PK, ScriptSigP2PKH,
          ScriptSigP2SH, Slp, SlpAddressUtxoResult,
