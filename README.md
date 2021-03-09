@@ -37,7 +37,7 @@ _* Make a backup of .cache file from time to time (to prevent downloading a lot 
 
 --------------------------------------------------------------------------------
 
-### Mining tutorial (Kali Linux or Ubuntu on Windows 10, Windows 10 and Kali Linux on Android phone)
+### Mining tutorial (Ubuntu, Debian or Kali Linux on Windows 10, Windows 10 and Debian Linux on Android phone)
 
 You need to have some basic knowledge how to use Windows or Linux and a command line. This tutorial may not be for perfect, so use your intuition. It is not tested on "fresh" Windows and you may need some other applications or drivers installed, that I am not aware
 
@@ -89,19 +89,21 @@ _You should see that eg. visualstudio2017 build tools, python 3, chocolatey are 
 
 - Open Windows Control panel - go to "Programs" - go to "Turn Windows features on or off" - select "Windows Subsystem for Linux" and check the box, click ok and reboot Windows
 
-- Download and install Kali Linux or Ubuntu 20.4 LTS from Microsoft Store
+- Download and install Debian, Kali Linux or Ubuntu 20.4 LTS from Microsoft Store
 
-- Open Kali Linux or Ubuntu command line (Start menu - Kali or Ubuntu)
+- Open Kali Linux or Ubuntu command line (Start menu - Debian, Kali or Ubuntu)
 
 - Setup your username and password
 
-- In a command line type commands (press enter after every command; commands are the same for Kali and Ubuntu):
+- In a command line type commands (press enter after every command; commands are the same for Debian, Kali and Ubuntu):
 
 `cd /mnt/c`
 
 `sudo apt update`
 
 `sudo apt upgrade`
+
+`sudo apt-get install wget curl`
 
 `curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -`
 
@@ -167,7 +169,7 @@ _*Txids will be downloaded first (it may take a while) and then mining will star
 _*Press Ctrl C and type Y if you want to stop the the miner_
 
 
-#### Mining on Android phone with Kali Linux
+#### Mining on Android phone with Debian Linux
 
 _*You may need at least 2GB RAM_
 
@@ -175,7 +177,7 @@ _*You may need at least 2GB RAM_
 
 - Install the app
 
-- Open the app and install Kali Linux (not Ubuntu - fastmine does not work well with Ubuntu on Android)
+- Open the app and install Debian Linux (not Ubuntu - fastmine does not work well with Ubuntu on Android)
 
 - Setup your username and passwords (use a short username and password - e.g. 54321 - you can change the password later when you get used to Linux)
 
@@ -223,7 +225,7 @@ _*Tap: ctrl O enter - to save changes and ctrl X enter - to exit editor_
 
 _*Ignore errors/warnings (if any appears eg. keccak and secp256k1 ; it is because of npm v.6x). Do not run npm audit fix !_
 
-`export NODE_OPTIONS=--max_old_space_size=2048`
+`export NODE_OPTIONS=--max_old_space_size=4096`
 
 `npm start`
 
