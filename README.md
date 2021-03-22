@@ -131,6 +131,8 @@ Go back to the command line and type commands:
 
 `export NODE_OPTIONS=--max_old_space_size=4096`
 
+*_or you can use my .cache file - type/paste this command: `wget https://github.com/mazetoken/mining/raw/master/tokens%20cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mining/raw/master/tokens%20cache/mist/.cache`_
+
 `npm start`
 
 _*Txids will be downloaded first (it may take a while) and then mining will start_
@@ -161,6 +163,8 @@ Open windows explorer (no need to close PowerShell) and go to mminer folder on y
 Go back to PowerShell and type commands:
 
 `$env:NODE_OPTIONS="--max-old-space-size=4096"`
+
+*_or you can use my .cache file - type/paste this command: `wget https://github.com/mazetoken/mining/raw/master/tokens%20cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mining/raw/master/tokens%20cache/mist/.cache`_
 
 `npm start`
 
@@ -225,11 +229,10 @@ _*Tap: ctrl O enter - to save changes and ctrl X enter - to exit editor_
 
 _*Ignore errors/warnings (if any appears eg. keccak and secp256k1 ; it is because of npm v.6x). Do not run npm audit fix !_
 
-`export NODE_OPTIONS=--max_old_space_size=4096`
 
 `npm start`
 
-_*Txids will be downloaded first (it may take a while) and then mining will start. If you get Javasrcipt heap out of memory error or txids downloading is "killed", you may need to install the miner on desktop first and download .cache file to your phone miner directory (you can use `wget` command)_
+_*Txids will be downloaded first (it may take a while) and then mining will start. If you get Javasrcipt heap out of memory error or txids downloading is "killed", you may need to install the miner on desktop first and download .cache file to your phone miner directory (you can use `wget` command). Or you can use my .cache file - before `npm start` type/paste this command: `wget https://github.com/mazetoken/mining/raw/master/tokens%20cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mining/raw/master/tokens%20cache/mist/.cache` _
 
 _*Tap Ctrl C (to stop the miner)_
 
@@ -390,19 +393,6 @@ TOKEN_HALVING_INTERVAL_V1=25920
 MINER_DIFFICULTY_V1=3
 TOKEN_START_BLOCK_V1=665753
 TOKEN_ID_V1="9cc03f37c27ec0334b839f1ed66e07da13ff19d29a497ebbf505e124453831fd"
-USE_FASTMINE="yes"
-```
-
-
-##### ZOMBIE NFT1-Group Token:
-
-```
-MINER_COVENANT_V1="5779820128947f777601207f75597982012c947f757601687f777678827758947f7576538b7f77765c7982777f011179011179ad011179828c7f756079a8011279bb011479815e7981788c88765b79968b0114795e795279965480880400000000011579bc7e0112790117797eaa765f797f757681008854011a797e56797e170000000000000000396a04534c50000181044d494e54200113797e030102087e54797e0c22020000000000001976a914011879a97e0288ac7e0b220200000000000017a9145379a97e01877e527952797e787eaa607988587901127993b175516b6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6c"
-TOKEN_INIT_REWARD_V1=10
-TOKEN_HALVING_INTERVAL_V1=25920
-MINER_DIFFICULTY_V1=3
-TOKEN_START_BLOCK_V1=662762
-TOKEN_ID_V1="de6339df4ea6ff1b999c3c16b16764f3f749817d8a160a1cac29a1171f7ad639"
 USE_FASTMINE="yes"
 ```
 
