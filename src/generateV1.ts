@@ -359,7 +359,7 @@ export const generateV1 = async () => {
 
     // construct the mint transaction preimage
     const extraFee = redeemScriptBufT0.length + 8 + 32 + 8 + 8 + 72 + 100;
-    const rewardAmount = getRewardAmount(state.bestTokenHeight);
+    const rewardAmount = getRewardAmount(state.bestTokenHeight + 1);
 
     // create a MINT Transaction
     let unsignedMintHex = txnHelpers.simpleTokenMint({

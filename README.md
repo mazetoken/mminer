@@ -129,7 +129,9 @@ Open windows explorer (no need to close a command line) and go to mminer folder 
 
 Go back to the command line and type commands:
 
-`export NODE_OPTIONS=--max_old_space_size=4096`
+`export NODE_OPTIONS=--max_old_space_size=4096` (for 4GB RAM)
+
+or `export NODE_OPTIONS=--max_old_space_size=8192` (for 8GB RAM)
 
 *_or you can use my .cache file - type/paste this command: `wget https://github.com/mazetoken/mining/raw/master/tokens%20cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mining/raw/master/tokens%20cache/mist/.cache`_
 
@@ -162,7 +164,9 @@ Open windows explorer (no need to close PowerShell) and go to mminer folder on y
 
 Go back to PowerShell and type commands:
 
-`$env:NODE_OPTIONS="--max-old-space-size=4096"`
+`$env:NODE_OPTIONS="--max-old-space-size=4096"` (for 4GB RAM)
+
+or `$env:NODE_OPTIONS="--max-old-space-size=8192"` (for 8GB RAM)
 
 *_or you can use my .cache file - type/paste this command: `wget https://github.com/mazetoken/mining/raw/master/tokens%20cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mining/raw/master/tokens%20cache/mist/.cache`_
 
