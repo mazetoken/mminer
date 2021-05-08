@@ -5,13 +5,15 @@ import { BITBOX as BITBOXSDK, ECPair } from "bitbox-sdk";
 import * as crypto from "crypto";
 import { BlockNotification, ClientReadableStream,
          GetMempoolResponse, GrpcClient,
-         TransactionNotification } from "grpc-bchrpc-node";           
+         TransactionNotification } from "grpc-bchrpc-node";
 import { BchdNetwork,
          LocalValidator, ScriptSigP2PK, ScriptSigP2PKH,
          ScriptSigP2SH, Slp, SlpAddressUtxoResult,
          SlpTransactionDetails, SlpTransactionType,
          TransactionHelpers, Utils,
-         Validation } from "slpjs";         
+         Validation } from "slpjs";
+import { Crypto, ValidatorType1 } from "slp-validate";
+import { GraphSearchClient } from "grpc-graphsearch-node";
 import { ValidityCache } from "./cache";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -82,7 +84,61 @@ const getRawTransactions = async (txids: string[]) => {
 
 // setup a new local SLP validator
 const validator = new LocalValidator(BITBOX, getRawTransactions);
-const network = new BchdNetwork({BITBOX, client, validator});
+const network = new BchdNetwork({ BITBOX, client, validator });
+
+const txid: string = process.env.TOKEN_ID_V1!;
+
+// Use slp-validate (BCHD gRPC) - uncomment lines 92-104
+// (async function() {
+    // console.time("SLP-VALIDATE-GRPC");
+    // const slpValidator = new ValidatorType1({ getRawTransaction: async (txid: string) => {
+        // const res = await client.getRawTransaction({ hash: txid, reversedHashOrder: true });
+        // return Buffer.from(res.getTransaction_asU8());
+    // } });
+    // console.log("Validating:", txid);
+    // console.log("This may take a several seconds...");
+    // const isValid = await slpValidator.isValidSlpTxid({ txid });
+    // console.log("Final Result:", isValid);
+    // console.log("WARNING: THIS VALIDATION METHOD COMES WITH NO BURN PROTECTION.");
+    // console.timeEnd("SLP-VALIDATE-GRPC");
+// })();
+
+// Use Graph Search slp-validate (GS++) - uncomment lines 107-141
+// const excludeList: string[] = [
+    // "token id to exclude",
+// ];
+// const dag = new Map<string, Buffer>();
+// const getRawTransaction = async (id: string) => {
+    // if (! dag.has(id)) {
+        // if (! excludeList.includes(id)) {
+            // { return Buffer.alloc(60); }
+        // }
+        // throw Error(`gs++ server response is missing txid ${id}`);
+    // }
+    // return dag.get(id)!;
+// };
+// const slpValidator = new ValidatorType1({ getRawTransaction });
+// for (const validTxid of excludeList) {
+    // slpValidator.addValidTxidFromStore(validTxid);
+// }
+// (async () => {
+    // console.time("SLP-VALIDATE-W-GRAPH-SEARCH");
+    // const gs = new GraphSearchClient({ url: process.env.GRAPH_SEARCH_URL });
+    // let downloadCount = 0;
+    // (await gs.graphSearchFor({ hash: txid, excludeList })).getTxdataList_asU8().forEach((txn) => {
+        // const txnBuf = Buffer.from(txn);
+        // const id = Crypto.HashTxid(txnBuf).toString("hex");
+        // downloadCount++;
+        // dag.set(id, txnBuf);
+    // });
+    // console.log(`Validating: ${txid}`);
+    // console.log(`This may take a several seconds...`);
+    // const isValid = await slpValidator.isValidSlpTxid({ txid });
+    // console.log(`Final Result: ${isValid}`);
+    // console.log(`Transactions Downloaded: ${downloadCount}`);
+    // console.log(`WARNING: THIS VALIDATION METHOD COMES WITH NO BURN PROTECTION.`);
+    // console.timeEnd(`SLP-VALIDATE-W-GRAPH-SEARCH`);
+// })();
 
 const getRewardAmount = (block: number) => {
     const initReward = parseInt(process.env.TOKEN_INIT_REWARD_V1 as string, 10);
@@ -134,7 +190,7 @@ streams.bchdBlocks!.on("data", async (data: BlockNotification) => {
 
 streams.bchdTransactions = sp(async () => {
     return await client.subscribeTransactions({
-        includeBlockAcceptance: false, includeMempoolAcceptance: true, includeSerializedTxn: false,
+        includeMempoolAcceptance: true, includeBlockAcceptance: false, includeSerializedTxn: false,
     });
 })();
 
@@ -288,7 +344,7 @@ export const generateV1 = async () => {
     console.log(`Validating unspent SLP txos in miner's wallet...`);
     const utxos = await network.processUtxosForSlp(txos);
     console.log(`Finished validating SLP txos in miner's wallet.`);
-    let txnInputs = utxos.nonSlpUtxos.filter((o: any) => o.satoshis >= 1870);
+    let txnInputs = utxos.nonSlpUtxos.filter((o: any) => o.satoshis >= 600);
     if (txnInputs.length === 0) {
         throw Error("There are no non-SLP inputs available to pay for gas");
     }
@@ -439,6 +495,8 @@ export const generateV1 = async () => {
                 solhash = BITBOX.Crypto.hash256(prehash);
 
                 if (solhash[0] !== 0x00 || solhash[1] !== 0x00 || solhash[2] !== 0x00) {
+                // uncomment the line below for mining dSLP and add comment to the line above
+                // if (solhash[0] !== 0x00 || solhash[1] !== 0x00) {    
                     console.log("Something went wrong with fastmine");
                     continue;
                 } else {

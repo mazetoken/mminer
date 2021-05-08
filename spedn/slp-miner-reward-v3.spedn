@@ -1,0 +1,81 @@
+// SLP Mint Miner Contract
+
+contract SlpCoinBlockReward(
+    [byte; 4] prevBlockHeight,
+    [byte; 32] tokenId,
+    Sha256 rawscrBaseSha256
+    ) {
+        challenge generate(
+            Sig s,
+            PubKey minerPK,
+            [byte] rawscrBase,
+            [byte; 8] newTokenSatoshis,
+            [byte; 8] newBatonSatoshis,
+            [byte; 4] minerSolution,
+            [byte; 4] mintAmount,
+            [byte; 4] blockHeight,
+            [byte] preimage
+    ) {
+        // preimage deserializaion
+        int preimageSize = size(preimage);
+        ([byte] preimage_front, [byte] tail) = preimage @ (preimageSize - 40); // hashOutput + nLocktime + sighash
+        [byte] belly = snd(fst(preimage @ (preimageSize - 44)) @ 104);
+        [byte] value = snd(belly @ (size(belly) - 8));
+
+        // verify script sig is updating state with the proper block height
+        int blockHeightInt = bin2num(blockHeight);
+        verify bin2num(prevBlockHeight) == blockHeightInt - 1;
+        verify blockHeightInt < 2469094;
+
+        // calculate proper mintAmount based on current block height
+        //int baseMint = 300000000;     // 400 with a precision of 6 decimal places
+        verify mintAmount == num2bin(300000000 / ((blockHeightInt / 26280) + 1), 4);
+
+        // flip the byte order for SLP output amount
+        ([byte] left, [byte] first) = mintAmount @ 3;
+        ([byte] last, [byte] middle) = left @ 1;
+        ([byte] mr, [byte] ml) = middle @ 1;
+        [byte] mintAmountBE = 0x00000000 . first . ml . mr . last;
+
+        // verify the miner's solution is acceptable
+        [byte] hash = hash256(preimage_front . minerSolution);
+        verify bin2num(fst(hash @ 2)) == 0;
+
+        // restrict new baton value to 21 BCH or less
+        ([byte] batonValueBin, [byte] zeros) = newBatonSatoshis @ 4;
+        verify bin2num(zeros) == 0;
+        int batonValue = bin2num(batonValueBin);
+        int randomNumber = bin2num(snd(hash @ 30));
+        if (batonValue < 2100000000 && randomNumber != 0) {
+            verify batonValue == bin2num(fst(value @ 4)) + 25000;
+        } else {
+            verify batonValue == 25000;
+        }
+
+        // check proper token output value
+        ([byte] tokenValueBin, [byte] zeros2) = newTokenSatoshis @ 4;
+        int tokenValue = bin2num(tokenValueBin);
+        verify bin2num(zeros2) == 0;
+        int prevBatonValue = bin2num(fst(value @ 4));
+        if (batonValue < prevBatonValue) {
+            verify tokenValue == 546 + (prevBatonValue - batonValue);
+        } else {
+            verify tokenValue == 546;
+        }
+
+        // verify rawScrBase 
+        verify sha256(rawscrBase) == rawscrBaseSha256;
+
+        // [byte] out1_slp_msg = 0x0000000000000000396a04534c50000101044d494e5420 . tokenId . 0x010208 . mintAmountBE;
+        // [byte] out2_token_p2pkh = newTokenSatoshis . 0x1976a914 . hash160(minerPK) . 0x88ac;
+        // [byte] out3_baton_p2sh = newBatonSatoshis . 0x17a914 . hash160(0x04 . blockHeight . 0x20 . tokenId . 0x20 . rawscrBaseSha256 . rawscrBase) . 0x87;
+
+        verify hash256(0x0000000000000000396a04534c50000101044d494e5420 . tokenId . 0x010208 . mintAmountBE . newTokenSatoshis . 0x1976a914 . hash160(minerPK) . 0x88ac . newBatonSatoshis . 0x17a914 . hash160(0x04 . blockHeight . 0x20 . tokenId . 0x20 . rawscrBaseSha256 . rawscrBase) . 0x87) == Sha256(fst(tail @ 32));
+        verify checkLockTime(TimeStamp(blockHeightInt + 0));
+
+        separator;
+        // check sig to enforce valid preimage and scriptCode
+        verify checkSig(s, minerPK);
+        verify checkDataSig(toDataSig(s), sha256(preimage), minerPK);
+    }
+}

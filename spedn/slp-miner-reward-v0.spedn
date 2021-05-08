@@ -1,0 +1,132 @@
+// SLP Mint Miner Contract
+
+// NOTE: various parts are commented out for the difficulty adjustment and reward curve
+//       due to 520 byte script push limitations. 
+
+contract SlpCoinBlockReward(
+    [byte] state_t0,
+    [byte] tokenId
+    ) {
+        challenge generate(
+            [byte; 4] state_t1,  // [byte; 5] state_t1,
+            [byte; 4] minerSolution,
+            // [byte; 8] newBatonSatoshis,
+            [byte; 8] mintAmount,
+            Sig s,
+            PubKey minerPK,
+            [byte] preimage
+    ) {
+        // preimage deserializaion
+        ([byte] ver, _ ) = preimage @ 4;                        // nVersion
+        (_, [byte] tail)= preimage @ (size(preimage) - 40);     // hashOutput + nLocktime + sighash
+        ([byte] hashOutput,  _) = tail @ 32;
+        ([byte] torso,_) =  preimage @ (size(preimage) - 44);
+        ( _, [byte] belly) = torso @ 104;
+        ([byte] scriptCode, [byte] value) = belly @ (size(belly) - 8);
+        ( _, [byte] rawscr) = scriptCode @ (3 + 1);             // p2sh pushcode is 3 bytes, state pushcode is 1 byte
+        ([byte] prevState, [byte] rawscrBase) = rawscr @ size(state_t0);
+
+        // check sig to enforce valid preimage and scriptCode
+        verify checkSig(s, minerPK);
+        verify checkDataSig(toDataSig(s), sha256(preimage), minerPK);
+
+        // parse state variables from state memory space
+        // ([byte; 4] prevBlockHeight, _) = state_t0 @ 4;  //([byte; 4] prevBlockHeight, [byte] prevDifficulty) = state_t0 @ 4;
+        // ([byte; 4] blockHeight, _) = state_t1 @ 4;      //([byte; 4] blockHeight, [byte] difficulty) = state_t1 @ 4;
+        [byte] prevBlockHeight = state_t0;
+        [byte; 4] blockHeight = state_t1;
+
+        // verify script sig is updating state with the proper block height
+        int blockHeightInt = bin2num(blockHeight);
+        verify bin2num(prevBlockHeight) == blockHeightInt - 1;
+        verify blockHeightInt <= 42000;
+
+        // calculate proper mintAmount based on current block height
+
+        // NOTE: Mint amount table commented due to script limits
+        // TODO: adjust these numbers according to proper rates, and heights, 
+        // and token's decimal precision
+        //if (blockHeightInt < 700000) {
+        //    verify mintAmount == num2bin(500,8);
+        //} else { if (blockHeightInt < 705000) {
+        //    verify mintAmount == num2bin(250,8);
+        //} else { if (blockHeightInt < 710000) {
+        //    verify mintAmount == num2bin(125,8);
+        //} else { if (blockHeightInt < 720000) {
+        //    verify mintAmount == num2bin(75,8);
+        //} else { if (blockHeightInt < 730000) {
+        //    verify mintAmount == num2bin(35,8);
+        //} else {
+        //    verify mintAmount == num2bin(25,8);
+        //}}}}}
+        // verify mintAmount == 0x00000000000001f4; // 500
+        verify mintAmount == 0x0000000ba43b7400;    // 500.00000000
+
+        // verify the miner's solution is acceptable using the prev difficulty
+        [byte] solhash = hash256(preimage . minerSolution);
+        int numbytes = 2;  // bin2num(prevDifficulty);
+        ([byte] work, _) = solhash @ numbytes;
+        verify bin2num(work) == 0;
+
+        // NOTE: Difficulty adjustment commented due to script limits
+        // verify script sig is updating state with new difficulty
+        //int zeroWorkSats = 10000;
+        //int batonValue = bin2num(newBatonSatoshis);
+        //verify batonValue >= 546;
+        //int factor = zeroWorkSats / batonValue;
+        //if (factor < 32) {
+        //    verify difficulty == 0x00;
+        //} else { if (factor < 1024) {
+        //    verify difficulty == 0x01;
+        //} else { if (factor < 32768) {
+        //    verify difficulty == 0x02;
+        //} else { if (factor < 1048576) {
+        //    verify difficulty == 0x03;
+        //} else { if (factor < 33554432) {
+        //    verify difficulty == 0x04;
+        //} else { if (factor < 1073741824) {
+        //    verify difficulty == 0x05;
+        //} else {
+        //    verify difficulty == 0x06;
+        //}}}}}}
+
+        // prepend the new state to rawscr
+        [byte] varIntState = num2bin(size(blockHeight),1);  // [byte] varIntState = num2bin(size(blockHeight) + 1,1);  // size(difficulty),1);
+        [byte] rawscrNew = varIntState . blockHeight . rawscrBase;  // [byte] rawscrNew = varIntState . blockHeight . difficulty . rawscrBase;
+
+        // BCH output amounts
+        [[byte; 8]; 2] amounts = [0x0000000000000000, 0x2202000000000000]; // [0,546]
+
+        byte out1ScriptVarInt = 0x39;
+        [byte] tokenVersion = 0x01;
+        [byte] mintMsgChunk1 = 0x6a04534c500001;
+        [byte] mintMsgChunk2 = 0x044d494e5420;
+        [byte] mintMsgChunk3 = 0x010208;
+
+        byte opDup = 0x76;
+        byte opEqual = 0x87;
+        byte opHash160 = 0xa9;
+        byte pushHash = 0x14;
+        byte pushState = 0x08;
+        byte newVarInt1 = 0x17;
+        byte newVarInt2 = 0x19;
+        byte opEqualverify = 0x88;
+        byte opChecksig = 0xac;
+
+        [byte] out1_mint_slp = amounts[0] . out1ScriptVarInt . mintMsgChunk1 . tokenVersion . mintMsgChunk2 . tokenId . mintMsgChunk3 . mintAmount;
+        [byte] out2_token_p2pkh = amounts[1] . newVarInt2 . opDup . opHash160 . pushHash . hash160(minerPK) . opEqualverify . opChecksig;
+        //[byte] out3_baton_p2sh = newBatonSatoshis . newVarInt1 . opHash160 . pushHash . hash160(rawscrNew) . opEqual;
+        [byte] out3_baton_p2sh = amounts[1] . newVarInt1 . opHash160 . pushHash . hash160(rawscrNew) . opEqual;
+
+        //int inputValue = bin2num(value);
+        //if (batonValue < inputValue) {
+        //    [byte] minerChangeSats = num2bin(inputValue - batonValue, 8);
+        //    verify inputValue - batonValue >= 546;
+        //    [byte] out4_change_p2pkh = minerChangeSats . newVarInt2 . opDup . opHash160 . pushHash . hash160(minerPK) . opEqualverify . opChecksig;
+        //    verify hash256(out1_mint_slp . out2_token_p2pkh . out3_baton_p2sh . out4_change_p2pkh) == Sha256(hashOutput);
+        //} else {
+        //    verify hash256(out1_mint_slp . out2_token_p2pkh . out3_baton_p2sh) == Sha256(hashOutput);
+        //}
+        verify hash256(out1_mint_slp . out2_token_p2pkh . out3_baton_p2sh) == Sha256(hashOutput);
+    } 
+}

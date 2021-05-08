@@ -16,5 +16,5 @@ const run = async () => {
     }
 };
 
-console.log("Mminer1.0.2 started.");
+console.log("Mminer 1.0.3 started.");
 run();

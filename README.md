@@ -1,20 +1,20 @@
-### Mminer 1.0.2 
+### MAZE Slp Token Mminer 1.0.3 
 
-_Update and tutorial by [B_S_Z](https://t.me/b_s_z) - https://mazetoken.github.io_
+_Update and tutorial by B_S_Z - https://mazetoken.github.io_
 
-You can create a mineable SLP tokens (based on Mistcoin covenant contract script) and mine it with Mminer
+You can create a mineable SLP tokens (based on Mistcoin covenant contract script) and mine it with Mminer. This tutorial is for mining only
 
-Mminer is an updated version of Mist miner - bchd_mist_miner_v1 (https://mistcoin.org)
+Mminer is an updated version of Mist miner - [bchd_mist_miner_v1](https://mistcoin.org)
 
 What is updated:
 
 - Mminer is patched for "bn not an integer" error and "dust input attack", and stucked reward reduction (patches are from [Blue`s mist miner](https://gitlab.com/blue_mist/miner))
 
-- package.json - npm packages
+- package.json - npm packages (inculding grpc-bchrpc-node v 0.11.5 - works with BCHD nodes that have slp indexing enabled)
 
-- NFT1-Group Token mining
+- optional BCHD gRPC slp validation and GraphSearch GS++ slp validation from https://slp.dev (check generate_V1.ts in the Mminer src directory - remove comment (//) from lines 92-104 to enable BCHD gRPC validation or from lines 107-141 to enable graphsearch GS++ validation)
 
-Mminer is tested and it works, but use it at your own risk. If you are not sure about this miner, start with the original miner from https://mistcoin.org. The miner is not an "out of the box" application (other software must be installed to run the miner)
+Mminer is tested and it works, but use it at your own risk. If you are not sure about Mminer, you can try the original miner from https://mistcoin.org. Miners are not an "out of the box" applications (other software must be installed to run the miner)
 
 Mminer is prepared for mining MAZE, but you can use it to mine other tokens and NFTs (scroll down to tokens environment and replace data in Mminer .env file)
 
@@ -23,20 +23,21 @@ Mminer is prepared for mining MAZE, but you can use it to mine other tokens and 
 Known public BCHD servers: 
 
 ```
-bchd.greyh.at:8335
 bchd.imaginary.cash:8335
 bchd.fountainhead.cash:443
+ryzen.electroncash.de:8335
+bchd.greyh.at:8335
 ```
 
 _* Make a backup of .cache file from time to time (to prevent downloading a lot of txids if you reinstall the miner or run it on another pc/laptop/phone)_
 
 --------------------------------------------------------------------------------
 
-### Mining tutorial (Debian, Ubuntu or Kali Linux on Windows 10, Windows 10 or Debian Linux on Android phone)
+### Mining tutorial (Debian, Ubuntu or Kali Linux subsystem on Windows 10, Windows 10 or Debian Linux subsystem on Android phone)
 
 You need to have some basic knowledge how to use Windows or Linux and a command line. This tutorial may not be for perfect, so use your intuition. It is not tested on "fresh" Windows and you may need some other applications or drivers installed, that I am not aware
 
-_*You can also check [this](https://github.com/blockparty-sh/mist-miner) tutorial_
+_* You can also check [this](https://github.com/blockparty-sh/mist-miner) tutorial_
 
 #### Prepare Electron Cash SLP desktop wallet for mining
 
@@ -118,7 +119,7 @@ _You should see that eg. visualstudio2017 build tools, python 3, chocolatey ... 
 
 `npm i`
 
-_*Ignore errors/warnings (if any appears eg. keccak and secp256k1 ; it is because of npm v.6x). Do not run npm audit fix! Do not update npm to v.7x_
+_* Ignore errors/warnings (if any appears eg. keccak and secp256k1). Do not run npm audit fix! Do not update npm to v.7x_
 
 Open windows explorer (no need to close a command line) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" empty / no url (or paste known url in BCHD_GRPC_URL="..."). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
 
@@ -128,13 +129,13 @@ Go back to the command line and type commands (usually you need to do this only 
 
 or `export NODE_OPTIONS=--max_old_space_size=8192` (for 8GB RAM)
 
-*_or you can use my .cache file - type/paste this command: `wget https://github.com/mazetoken/mining/raw/master/tokens%20cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mining/raw/master/tokens%20cache/mist/.cache` - make sure that if you downolad it there is dot (.) in the filename - .cache. You can calculate max old space for your RAM amount - 1024 x your RAM_
+_* or you can use my .cache file - type/paste this command: `wget https://github.com/mazetoken/mining/raw/master/txid-cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mining/raw/master/txid-cache/mist/.cache` - make sure that if you downolad it there is dot (.) in the filename - .cache. You can calculate max old space for your RAM amount - 1024 x your RAM_
 
 `npm start`
 
-_*Txids will be downloaded first (it may take a while) and then mining will start_
+_* Txids will be downloaded first (it may take a while) and then mining will start_
 
-_*Press Ctrl C if you want to stop the miner. Type `npm start` to start again_
+_* Press Ctrl C if you want to stop the miner. Type `npm start` to start again_
 
 _* Run command: `sudo apt update` from time to time to update Linux_
 
@@ -153,7 +154,7 @@ _* Run command: `sudo apt update` from time to time to update Linux_
 
 `npm i`
 
-_*Ignore errors/warnings (if any eg. keccak and secp256k1 ; it is because of npm v.6x). Do not run npm audit fix ! Do not update npm to v.7x_
+_*Ignore errors/warnings (if any eg. keccak and secp256k1). Do not run npm audit fix ! Do not update npm to v.7x_
 
 Open windows explorer (no need to close PowerShell) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" empty /no url (or paste known url in BCHD_GRPC_URL="..."). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
 
@@ -163,18 +164,18 @@ Go back to PowerShell and type commands (usually you need to do this only once t
 
 or `$env:NODE_OPTIONS="--max-old-space-size=8192"` (for 8GB RAM)
 
-*_or you can use my .cache file - type/paste this command: `wget https://github.com/mazetoken/mining/raw/master/tokens%20cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mining/raw/master/tokens%20cache/mist/.cache` - make sure that if you downolad it there is dot (.) in the filename - .cache. You can calculate max old space for your RAM amount - 1024 x your RAM_
+_* or you can use my .cache file - type/paste this command: `wget https://github.com/mazetoken/mining/raw/master/txid-cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mining/raw/master/txid-cache/mist/.cache` - make sure that if you downolad it there is dot (.) in the filename - .cache. You can calculate max old space for your RAM amount - 1024 x your RAM_
 
 `npm start`
 
-_*Txids will be downloaded first (it may take a while) and then mining will start_
+_* Txids will be downloaded first (it may take a while) and then mining will start_
 
-_*Press Ctrl C and type Y if you want to stop the the miner_
+_* Press Ctrl C and type Y if you want to stop the the miner_
 
 
 #### Mining on Android phone with Debian Linux
 
-_*You need at least 2GB RAM_
+_* You need at least 2GB RAM_
 
 ##### Go to Google Play Store and download UserLAnd app
 
@@ -216,17 +217,17 @@ _*You need at least 2GB RAM_
 
 `sudo nano .env`
 
-_*Type/paste your WIF (your mining address private key) here "..." (WIF="...")_
+_* Type/paste your WIF (your mining address private key) here "..." (WIF="...")_
 
-_*Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" empty/no url (or paste known url in BCHD_GRPC_URL="...")_
+_* Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" empty/no url (or paste known BCHD url in BCHD_GRPC_URL="...")_
 
-_*You can type your mining tag (your nick or whatever) in MINER_UTF8="..."_
+_* You can type your mining tag (your nick or whatever) in MINER_UTF8="..."_
 
-_*Tap: ctrl O enter - to save changes and ctrl X enter - to exit editor_
+_* Tap: ctrl O enter - to save changes and ctrl X enter - to exit editor_
 
 `npm i`
 
-_*Ignore errors/warnings (if any appears eg. keccak and secp256k1 ; it is because of npm v.6x). Do not run npm audit fix ! Do not update npm to v.7x_
+_* Ignore errors/warnings (if any appears eg. keccak and secp256k1). Do not run npm audit fix ! Do not update npm to v.7x_
 
 
 `export NODE_OPTIONS=--max_old_space_size=2048` (for 2GB RAM)
@@ -237,9 +238,9 @@ _* usually you need to do this ^ only once to download txids (but it might not w
 
 `npm start`
 
-_*Txids will be downloaded first (it may take a while) and then mining will start. If you get Javasrcipt heap out of memory error or txids downloading is "killed", you may need to install the miner on desktop first and download .cache file to your phone miner directory (you can use `wget` command). Or you can use my .cache file - before `npm start` type/paste this command: `wget https://github.com/mazetoken/mining/raw/master/tokens%20cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mining/raw/master/tokens%20cache/mist/.cache` _
+_* Txids will be downloaded first (it may take a while) and then mining will start. If you get Javasrcipt heap out of memory error or txids downloading is "killed", you may need to install the miner on desktop first and download .cache file to your phone miner directory (you can use `wget` command). Or you can use my .cache file - before `npm start` type/paste this command: `wget https://github.com/mazetoken/mining/raw/master/txid-cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mining/raw/master/txid-cache/mist/.cache` _
 
-_*Tap Ctrl C (to stop the miner)_
+_* Tap Ctrl C (to stop the miner)_
 
 Start the miner again (if you closed UserLAnd app) - open the app, type your password and type commands:
 
@@ -267,15 +268,15 @@ To create NFT child tokens from mineable NFT1-Group tokens go to your Electron C
 
 #### Maze and other mineable tokens environment (inculding Non-Fungible Tokens)
 
-_*Total supply will not be higher than 21 million_
+_* Total supply will not be higher than 21 million_
 
-_*NFT1-Group Token mining will probably stop at third halving (reward reduction) because of 0 decimal places_
+_* NFT1-Group Token mining will probably stop at third halving (reward reduction) because of 0 decimal places_
 
-_*Change data in Mminer .env file to mine different tokens_
+_* Change data in Mminer .env file to mine different tokens_
 
-_*Do not paste MINER_COVENANT_V1 from SLP Token Type 1 to NFT1-Group Token environment (.env)_
+_* Do not paste MINER_COVENANT_V1 from SLP Token Type 1 to NFT1-Group Token environment (.env)_
 
-_*Do not forget that, for NFT1-Group Token mining, after you run `npm i` and before you run `npm start`, you should go to node_modules folder in Mminer directory, go to slpjs folder, go to lib folder and open slpjs.js (in editor, e.g. notepad) and change token type from `0x01` to `0x81` in line 423 (it should look like this: `if (type === void 0) { type = 0x81; }`)_
+_* Do not forget that, for NFT1-Group Token mining, after you run `npm i` and before you run `npm start`, you should go to node_modules folder in Mminer directory, go to slpjs folder, go to lib folder and open slpjs.js (in editor, e.g. notepad) and change token type from `0x01` to `0x81` in line 423 (it should look like this: `if (type === void 0) { type = 0x81; }`)_
 
 _* Make a backup of .cache file from time to time (to prevent downloading a lot of txids if you reinstall the miner or run it on another pc/laptop/phone)_
 
@@ -334,7 +335,7 @@ TOKEN_ID_V1="bc3ab6616aecd03ecbff478c882e05df043e8af959f3c3964c9c9d15ba7d55bd"
 USE_FASTMINE="yes"
 ```
 
-##### Mist (Mistcoin is the first mineable SLP Token Type 1):
+##### Mist (Mistcoin) - the first mineable SLP Token Type 1:
 
 ```
 MINER_COVENANT_V1="5779820128947f777601207f75597982012c947f757601687f777678827758947f7576538b7f77765c7982777f011179011179ad011179828c7f756079a8011279bb011479815e7981788c88765b79968b0114795e795279965480880400000000011579bc7e0112790117797eaa765f797f757681008854011a797e56797e170000000000000000396a04534c50000101044d494e54200113797e030102087e54797e0c22020000000000001976a914011879a97e0288ac7e0b220200000000000017a9145379a97e01877e527952797e787eaa607988587901127993b175516b6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6c"
@@ -399,7 +400,7 @@ TOKEN_ID_V1="9cc03f37c27ec0334b839f1ed66e07da13ff19d29a497ebbf505e124453831fd"
 USE_FASTMINE="yes"
 ```
 
-_Other mineable tokens available: OPAL, BTCL, FILS, WRS, FANTASY_
+_Other mineable SLP Tokens Type 1: OPAL, BTCL, FILS, WRS, FANTASY - ask tokens creators for mining environment_
 
 --------------------------------------------------------------------------------------------
 
