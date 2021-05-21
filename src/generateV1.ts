@@ -89,19 +89,19 @@ const network = new BchdNetwork({ BITBOX, client, validator });
 const txid: string = process.env.TOKEN_ID_V1!;
 
 // Use slp-validate (BCHD gRPC) - uncomment lines 92-104
-// (async function() {
-    // console.time("SLP-VALIDATE-GRPC");
-    // const slpValidator = new ValidatorType1({ getRawTransaction: async (txid: string) => {
-        // const res = await client.getRawTransaction({ hash: txid, reversedHashOrder: true });
-        // return Buffer.from(res.getTransaction_asU8());
-    // } });
-    // console.log("Validating:", txid);
-    // console.log("This may take a several seconds...");
-    // const isValid = await slpValidator.isValidSlpTxid({ txid });
-    // console.log("Final Result:", isValid);
+(async function() {
+    console.time("SLP-VALIDATE-GRPC");
+    const slpValidator = new ValidatorType1({ getRawTransaction: async (txid: string) => {
+        const res = await client.getRawTransaction({ hash: txid, reversedHashOrder: true });
+        return Buffer.from(res.getTransaction_asU8());
+    } });
+    console.log("Validating:", txid);
+    console.log("This may take a several seconds...");
+    const isValid = await slpValidator.isValidSlpTxid({ txid });
+    console.log("Final Result:", isValid);
     // console.log("WARNING: THIS VALIDATION METHOD COMES WITH NO BURN PROTECTION.");
-    // console.timeEnd("SLP-VALIDATE-GRPC");
-// })();
+    console.timeEnd("SLP-VALIDATE-GRPC");
+})();
 
 // Use Graph Search slp-validate (GS++) - uncomment lines 107-141
 // const excludeList: string[] = [
@@ -344,7 +344,7 @@ export const generateV1 = async () => {
     console.log(`Validating unspent SLP txos in miner's wallet...`);
     const utxos = await network.processUtxosForSlp(txos);
     console.log(`Finished validating SLP txos in miner's wallet.`);
-    let txnInputs = utxos.nonSlpUtxos.filter((o: any) => o.satoshis >= 600);
+    let txnInputs = utxos.nonSlpUtxos.filter((o: any) => o.satoshis >= 1870);
     if (txnInputs.length === 0) {
         throw Error("There are no non-SLP inputs available to pay for gas");
     }

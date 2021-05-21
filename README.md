@@ -12,13 +12,13 @@ What is updated:
 
 - package.json - npm packages (inculding grpc-bchrpc-node v 0.11.5 - works with BCHD nodes that have slp indexing enabled)
 
-- optional BCHD gRPC slp validation and GraphSearch GS++ slp validation from https://slp.dev (check generate_V1.ts in the Mminer src directory - remove comment (//) from lines 92-104 to enable BCHD gRPC validation or from lines 107-141 to enable graphsearch GS++ validation)
+- optional BCHD gRPC slp validation and GraphSearch GS++ slp validation from https://slp.dev (check generate_V1.ts in the Mminer src directory - add comment (//) to lines 92-104 to disable BCHD gRPC validation and remove comment from lines 107-141 to enable graphsearch GS++ validation)
 
 Mminer is tested and it works, but use it at your own risk. If you are not sure about Mminer, you can try the original miner from https://mistcoin.org. Miners are not an "out of the box" applications (other software must be installed to run the miner)
 
 Mminer is prepared for mining MAZE, but you can use it to mine other tokens and NFTs (scroll down to tokens environment and replace data in Mminer .env file)
 
-#### IMPORTANT: for NFT1-Group Token mining you need to change the token environment (.env file) and after you run `npm i` and before you run `npm start`, go to node_modules folder in Mminer main directory, go to slpjs folder, go to lib folder and open slpjs.js (in editor, e.g. notepad) and change token type from `0x01` to `0x81` in line 423 (it should look like this: `if (type === void 0) { type = 0x81; }`)
+#### IMPORTANT: for NFT1-Group Token mining you need to change the token environment (.env file) and after you run `npm i` and before you run `npm start`, go to node_modules folder in Mminer main directory, go to slpjs folder, go to lib folder and open slpjs.js (in editor, e.g. notepad) and change token type from `0x01` to `0x81` in line 423 (it should look like this: `if (type === void 0) { type = 0x81; }`). Do not paste MINER_COVENANT_V1 from SLP Token Type 1 to NFT1-Group Token environment (in .env)
 
 Known public BCHD servers: 
 
@@ -119,7 +119,7 @@ _You should see that eg. visualstudio2017 build tools, python 3, chocolatey ... 
 
 `npm i`
 
-_* Ignore errors/warnings (if any appears eg. keccak and secp256k1). Do not run npm audit fix! Do not update npm to v.7x_
+_* Ignore errors/warnings (if any appears eg. keccak and secp256k1). Do not run npm audit fix!
 
 Open windows explorer (no need to close a command line) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" empty / no url (or paste known url in BCHD_GRPC_URL="..."). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
 
@@ -154,7 +154,7 @@ _* Run command: `sudo apt update` from time to time to update Linux_
 
 `npm i`
 
-_*Ignore errors/warnings (if any eg. keccak and secp256k1). Do not run npm audit fix ! Do not update npm to v.7x_
+_*Ignore errors/warnings (if any eg. keccak and secp256k1). Do not run npm audit fix !
 
 Open windows explorer (no need to close PowerShell) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" empty /no url (or paste known url in BCHD_GRPC_URL="..."). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
 
@@ -227,7 +227,7 @@ _* Tap: ctrl O enter - to save changes and ctrl X enter - to exit editor_
 
 `npm i`
 
-_* Ignore errors/warnings (if any appears eg. keccak and secp256k1). Do not run npm audit fix ! Do not update npm to v.7x_
+_* Ignore errors/warnings (if any appears eg. keccak and secp256k1). Do not run npm audit fix !
 
 
 `export NODE_OPTIONS=--max_old_space_size=2048` (for 2GB RAM)
@@ -370,7 +370,7 @@ TOKEN_START_BLOCK_V1=653104
 TOKEN_ID_V1="5aa6c9485f746cddfb222cba6e215ab2b2d1a02f3c2506774b570ed40c1206e8"
 USE_FASTMINE="yes"
 ```
-_*To enable fastmine for dSLP go to Mminer src folder, open generateV1.ts in any editor, go to line 443 and remove `|| solhash[2] !== 0x00`. It should look like this: `if (solhash[0] !== 0x00 || solhash[1] !== 0x00) {`_
+_*To enable fastmine for dSLP go to Mminer src folder, open generateV1.ts in any editor, uncomment (remove //) from the line 499 and add comment (//) to the line 497. It should look like this: `if (solhash[0] !== 0x00 || solhash[1] !== 0x00) {`_
 
 dSLP reward schedule:
 
