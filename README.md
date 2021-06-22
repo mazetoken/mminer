@@ -41,7 +41,7 @@ _* You can also check [this](https://github.com/blockparty-sh/mist-miner) tutori
 
 #### Prepare Electron Cash SLP desktop wallet for mining
 
-- Download [Electron Cash SLP wallet](https://simpleledger.cash/project/electron-cash-slp-edition/)
+- Download [Electron Cash SLP wallet](https://github.com/simpleledger/Electron-Cash-SLP/releases/tag/3.6.6)
 
 - Create a standard wallet in Electron Cash. Go to Addresses tab and choose two addresses (one for funding and the second for mining; you can give them a label). You can also create two separate wallets - one for funding and the second for mining - it`s up to you
 
