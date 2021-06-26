@@ -1,6 +1,8 @@
 ### MAZE SLP Token - Mminer 1.0.3 
 
-_Update and tutorial by B_S_Z - https://mazetoken.github.io_
+_Update and tutorial by B_S_Z - https://mazetoken.github.io ; https://t.me/mazeslptoken_
+
+MAZE token id: [bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378](https://simpleledger.info/token/bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378)
 
 You can create a mineable SLP tokens based on Mistcoin covenant contract script and mine it with Mminer. This tutorial is for mining only
 
@@ -12,9 +14,9 @@ What is updated in the Mminer:
 
 - package.json - npm packages (inculding grpc-bchrpc-node v 0.11.5 - works with BCHD nodes that have slp indexing enabled)
 
-- optional BCHD gRPC slp validation and GraphSearch GS++ slp validation from https://slp.dev (check generate_V1.ts in the Mminer src directory - add comment (//) to lines 92-104 to disable BCHD gRPC validation and remove comment from lines 107-141 to enable graphsearch GS++ validation)
+- BCHD gRPC slp validation is added and optional GraphSearch GS++ slp validation can be used (https://slp.dev). Check generate_V1.ts in the Mminer src directory - add comment (//) to lines 92-104 to disable BCHD gRPC validation and remove comment from lines 107-141 to enable graphsearch GS++ validation
 
-Mminer is tested and it works, but use it at your own risk. If you are not sure about Mminer, you can try the original miner from https://mistcoin.org. Miners are not an "out of the box" applications (other software must be installed to run the miner)
+Mminer is tested and it works, but use it at your own risk. The miner is not an "out of the box" application (other software must be installed to run the miner)
 
 Mminer is prepared for mining MAZE, but you can use it to mine other tokens and NFTs (scroll down to tokens environment and replace data in Mminer .env file)
 

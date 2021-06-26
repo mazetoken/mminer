@@ -1,6 +1,6 @@
 # Mistcoin archive
 
-About [Mistcoin](Mistcoin.md)
+About [Mist](Mistcoin.md)
 
 ## Miners:
 
@@ -10,6 +10,6 @@ Mistcoin BCHD mist-miner by Kasumi - [bchd_mist_miner_v1](bchd_mist_miner_v1.zip
 
 Continuation of Mistcoin miner by Blue - [blue-miner](https://gitlab.com/blue_mist/miner)
 
-Continuation of Mistcoin miner by Blockparty-sh - [mist-miner](https://github.com/blockparty-sh/mist-miner) 
+Continuation of Mistcoin miner by Blockparty-sh - [mist-miner](https://github.com/blockparty-sh/mist-miner) - with Docker file and Mac tutorial 
 
 The first (original) Mistcoin miner by Kasumi - [mist_miner_0.02](mist_miner_0.0.2.zip)
