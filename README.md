@@ -1,12 +1,12 @@
-### MAZE Slp Token Mminer 1.0.3 
+### MAZE SLP Token - Mminer 1.0.3 
 
 _Update and tutorial by B_S_Z - https://mazetoken.github.io_
 
-You can create a mineable SLP tokens (based on [Mistcoin](Mistcoin.md) covenant contract script) and mine it with Mminer. This tutorial is for mining only
+You can create a mineable SLP tokens based on Mistcoin covenant contract script and mine it with Mminer. This tutorial is for mining only
 
-Mminer is an updated version of Mist miner - bchd_mist_miner_v1. Mistcoin website (https://mistcoin.org) is down for now
+Mminer is continuation and updated version of [Mistcoin BCHD mist-miner](Mistcoin-archive/bchd_mist_miner_v1.zip). Mistcoin website (https://mistcoin.org) is down for now, so you can check [Mistcoin Archive](Mistcoin-archive/Mistcoin.md). Check other miners in [Mistcoin archive](Mistcoin-archive/readme.md)
 
-What is updated:
+What is updated in the Mminer:
 
 - Mminer is patched for "bn not an integer" error and "dust input attack", and stucked reward reduction (patches are from [Blue`s mist miner](https://gitlab.com/blue_mist/miner))
 
@@ -20,7 +20,7 @@ Mminer is prepared for mining MAZE, but you can use it to mine other tokens and 
 
 #### IMPORTANT: for NFT1-Group Token mining you need to change the token environment (.env file) and after you run `npm i` and before you run `npm start`, go to node_modules folder in Mminer main directory, go to slpjs folder, go to lib folder and open slpjs.js (in editor, e.g. notepad) and change token type from `0x01` to `0x81` in line 423 (it should look like this: `if (type === void 0) { type = 0x81; }`). Do not paste MINER_COVENANT_V1 from SLP Token Type 1 to NFT1-Group Token environment (in .env)
 
-Known public BCHD servers: 
+Known public BCHD servers you can use for mining: 
 
 ```
 bchd.imaginary.cash:8335
@@ -36,8 +36,6 @@ _* Make a backup of .cache file from time to time (to prevent downloading a lot 
 ### Mining tutorial (Debian, Ubuntu or Kali Linux subsystem on Windows 10, Windows 10 or Debian Linux subsystem on Android phone)
 
 You need to have some basic knowledge how to use Windows or Linux and a command line. This tutorial may not be for perfect, so use your intuition. It is not tested on "fresh" Windows and you may need some other applications or drivers installed, that I am not aware
-
-_* You can also check [this](https://github.com/blockparty-sh/mist-miner) tutorial (for Mac)_
 
 #### Prepare Electron Cash SLP desktop wallet for mining
 
