@@ -2,9 +2,9 @@
 
 _Update and tutorial by B_S_Z - https://mazetoken.github.io_
 
-You can create a mineable SLP tokens (based on Mistcoin covenant contract script) and mine it with Mminer. This tutorial is for mining only
+You can create a mineable SLP tokens (based on [Mistcoin](Mistcoin.md) covenant contract script) and mine it with Mminer. This tutorial is for mining only
 
-Mminer is an updated version of Mist miner - [bchd_mist_miner_v1](https://mistcoin.org)
+Mminer is an updated version of Mist miner - bchd_mist_miner_v1. Mistcoin website (https://mistcoin.org) is down for now
 
 What is updated:
 
@@ -37,7 +37,7 @@ _* Make a backup of .cache file from time to time (to prevent downloading a lot 
 
 You need to have some basic knowledge how to use Windows or Linux and a command line. This tutorial may not be for perfect, so use your intuition. It is not tested on "fresh" Windows and you may need some other applications or drivers installed, that I am not aware
 
-_* You can also check [this](https://github.com/blockparty-sh/mist-miner) tutorial_
+_* You can also check [this](https://github.com/blockparty-sh/mist-miner) tutorial (for Mac)_
 
 #### Prepare Electron Cash SLP desktop wallet for mining
 
@@ -238,7 +238,7 @@ _* usually you need to do this ^ only once to download txids (but it might not w
 
 `npm start`
 
-_* Txids will be downloaded first (it may take a while) and then mining will start. If you get Javasrcipt heap out of memory error or txids downloading is "killed", you may need to install the miner on desktop first and download .cache file to your phone miner directory (you can use `wget` command). Or you can use my .cache file - before `npm start` type/paste this command: `wget https://github.com/mazetoken/mining/raw/master/txid-cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mining/raw/master/txid-cache/mist/.cache` _
+_* Txids will be downloaded first (it may take a while) and then mining will start. If you get Javasrcipt heap out of memory error or txids downloading is "killed", you may need to install the miner on desktop first and download .cache file to your phone miner directory (you can use `wget` command). Or you can use my .cache file - before `npm start` type/paste this command: `wget https://github.com/mazetoken/mining/raw/master/txid-cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mining/raw/master/txid-cache/mist/.cache`_
 
 _* Tap Ctrl C (to stop the miner)_
 
@@ -397,6 +397,18 @@ TOKEN_HALVING_INTERVAL_V1=25920
 MINER_DIFFICULTY_V1=3
 TOKEN_START_BLOCK_V1=665753
 TOKEN_ID_V1="9cc03f37c27ec0334b839f1ed66e07da13ff19d29a497ebbf505e124453831fd"
+USE_FASTMINE="yes"
+```
+
+##### ZOMBIE NFT1-Group Token:
+
+```
+MINER_COVENANT_V1="5779820128947f777601207f75597982012c947f757601687f777678827758947f7576538b7f77765c7982777f011179011179ad011179828c7f756079a8011279bb011479815e7981788c88765b79968b0114795e795279965480880400000000011579bc7e0112790117797eaa765f797f757681008854011a797e56797e170000000000000000396a04534c50000181044d494e54200113797e030102087e54797e0c22020000000000001976a914011879a97e0288ac7e0b220200000000000017a9145379a97e01877e527952797e787eaa607988587901127993b175516b6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6c"
+TOKEN_INIT_REWARD_V1=
+TOKEN_HALVING_INTERVAL_V1=
+MINER_DIFFICULTY_V1=3
+TOKEN_START_BLOCK_V1=
+TOKEN_ID_V1=""
 USE_FASTMINE="yes"
 ```
 
