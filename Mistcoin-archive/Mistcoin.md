@@ -37,7 +37,7 @@ where,
 `initialMintAmount` - The initial reward amount, i.e., 400
 `mintAmount` - The reward amount received by a successful miner
 
-![mist_rewards](./mist_rewards.png)
+![mist_rewards](img/mist_rewards.png)
 
 The Mist mining rewards will stop when the `tokenHeight` state variable overflows at a value of 2,147,483,648 which would occur in the year 42,877 (or 40,857 years from now) if Mist miners continue to mine blocks and keep up with the underlying blockchain block height.
 
@@ -75,7 +75,7 @@ Mining for Mist rewards requires discovery of a sha256 hash of a 4-byte random m
 
 Covenant contracts enforce specific constraints on a spending transaction's input and/or output values.  These types of contracts have been studied extensively in the bitcoin community and typically work through introspection of the spending transaction's pre-hash image (or "preimage") which is validated by using both bitcoin script opcodes  `OP_CHECKSIG ` and `OP_CHECKDATASIG` .  A "stateful" covenant contract also has an internally managed state that is validated in the spending transaction and typically allows the user to propose changes to the contract's current state by pushing the new data into the scriptSig which the contract will validate and result in a new contract address.  This is not a new concept and has been demonstrated previously by Tobias Ruck with his blockchain chess application[2].  In this project, "token height" is the only internal state variable and it must be incremented by a value of 1 in each minting transaction.  The following figure illustrates the structure of the Mist miner rewards transaction graph.
 
-![mist_rewards_dag](./mist_rewards_dag.svg)
+![mist_rewards_dag](img/mist_rewards_dag.svg)
 
 The contract checks that a user supplied token height state has been properly incremented by a value of 1, and also checks that a user supplied mining solution produces a hash that contains 6 leading zeros when combined with the transaction's preimage (i.e., `sha256(preimage + mining solution) == 0x000123...abc`).
 
