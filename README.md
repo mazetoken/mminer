@@ -4,7 +4,7 @@ _Update and tutorial by B_S_Z - https://mazetoken.github.io ; https://t.me/mazes
 
 MAZE token id: [bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378](https://simpleledger.info/token/bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378)
 
-You can create a mineable SLP tokens based on Mistcoin covenant contract script and mine it with Mminer. This tutorial is for mining only
+#### You can create a mineable SLP tokens based on Mistcoin covenant contract script and mine it with Mminer
 
 Mminer is continuation and updated version of [Mistcoin BCHD mist-miner](Mistcoin-archive/bchd_mist_miner_v1.zip). Mistcoin website (https://mistcoin.org) is down for now, so you can check [Mistcoin Archive](Mistcoin-archive/Mistcoin.md). Check other miners in [Mistcoin archive](Mistcoin-archive/readme.md)
 
@@ -37,11 +37,11 @@ _* Make a backup of .cache file from time to time (to prevent downloading a lot 
 
 ### Mining tutorial (Debian, Ubuntu or Kali Linux subsystem on Windows 10, Windows 10 or Debian Linux subsystem on Android phone)
 
-You need to have some basic knowledge how to use Windows or Linux and a command line. This tutorial may not be for perfect, so use your intuition. It is not tested on "fresh" Windows and you may need some other applications or drivers installed, that I am not aware
+You need to have some basic knowledge how to use Windows or Linux and a command line. This tutorial may not be for perfect, so use your intuition
 
 #### Prepare Electron Cash SLP desktop wallet for mining
 
-- Download [Electron Cash SLP wallet](https://github.com/simpleledger/Electron-Cash-SLP/releases/tag/3.6.6)
+- Download [Electron Cash SLP wallet](https://github.com/simpleledger/Electron-Cash-SLP/releases/download/3.6.7-dev6/Electron-Cash-SLP-3.6.7-dev6-setup.exe)
 
 - Create a standard wallet in Electron Cash. Go to Addresses tab and choose two addresses (one for funding and the second for mining; you can give them a label). You can also create two separate wallets - one for funding and the second for mining - it`s up to you
 
@@ -175,7 +175,7 @@ _* Press Ctrl C and type Y if you want to stop the the miner_
 
 #### Mining on Android phone with Debian Linux
 
-_* You need at least 2GB RAM_
+_* You need at least 2GB RAM. Npm (Node package manager) might not work on Android 11 or newer_
 
 ##### Go to Google Play Store and download UserLAnd app
 
@@ -252,7 +252,56 @@ _* Run command: `sudo apt update` from time to time to update Linux_
 
 --------------------------------------------------------------------------------------
 
-##### NFT (mineable Non-Fungible Tokens)
+### How to create a mineable token based on Mistcoin (Mist) covenant contract
+
+Open Electron Cash SLP wallet, go to Tokens tab and right click to create a token. Your mineable token can have max 6 decimal places (you will need to remember decimal places to calculate mining reward amount). In Token Quantity filed type 0. Uncheck Fixed supply
+
+Wait for confirmation. Right click on your token - view token details - viewTX. Copy the token id and start block (it is under token id - "Mined in block: ...")
+
+Download and unzip this [Mist miner](Mistcoin-archive/mist_miner_0.0.2.zip) - we need slpdb miner to mine first "block"
+
+Go to slp-mist-master folder and open .env file (e.g. in notepad):
+
+```
+SLPDB_URL="https://slpdb.fountainhead.cash/q/"
+SLPSOCKET_URL="https://slpsocket.fountainhead.cash/s/"
+WIF="" // you will paste your WIF here later
+MINER_COVENANT_V1="5779820128947f777601207f75597982012c947f757601687f777678827758947f7576538b7f77765c7982777f011179011179ad011179828c7f756079a8011279bb011479815e7981788c88765b79968b0114795e795279965480880400000000011579bc7e0112790117797eaa765f797f757681008854011a797e56797e170000000000000000396a04534c50000101044d494e54200113797e030102087e54797e0c22020000000000001976a914011879a97e0288ac7e0b220200000000000017a9145379a97e01877e527952797e787eaa607988587901127993b175516b6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6c" //do not change this (this is the covenant contract template)
+TOKEN_INIT_REWARD_V1=400000000 // Mist reward is 400 (with 6 decimals); you can change mining reward e.g. 10000000 - this is 1000 with 4 decimal places
+TOKEN_HALVING_INTERVAL_V1=4320 // you can change halving interval
+MINER_DIFFICULTY_V1=3 // do not change this
+MINER_UTF8=""
+TOKEN_START_BLOCK_V1=paste here your token start block
+TOKEN_ID_V1="paste here your token id"
+``` 
+
+Check Mining tutorial above if you have Nodejs and other software installed. Open a command line (PowerShell or Linux terminal) and navigate to slp-mist-master directory
+
+Run commands:
+
+```
+npm i
+npm run tsc
+node ./src/init
+```
+
+You will get someting like this:
+
+`Send baton here to create mining vault -> simpleledger:pzhtrhzfzut7ycsf7eh7j0y250sxfnjxr5v6aecgqv`
+
+Go back to Electron Cash SLP wallet and right click on the token you created. Click on Mint tool. In Additional Token Quantity field type 0. Paste the mining vault slp address (that you generated with `node ./src/init` command) to Token Receiver Address and Mint Baton Address fields and click Create Additional Tokens. Your token minting baton will be sent to the contract address. Wait for confirmation
+
+Choose a slp address where you get you mineable token. Right click on the address - Private key, copy it (it begins with L or K) - this is your WIF. Paste it to .env file in slp-mist-master. Send to this slp address multiple `0.00001870` BCH, as it is described in mining tutorial above
+
+Go back to the command line and run:
+
+`npm start`
+
+Mining will start. After a while you should get your first "block" reward. When you get the first reward (mining height is 2) you can mine your token with BCHD miner (Mminer)
+
+--------------------------------------------------------------------------------------
+
+#### SLP NFT mining (mineable Non-Fungible Tokens)
 
 You do not need to mine NFT1-Group Tokens constantly. Mine a few blocks and create some NFT child tokens
 
@@ -412,7 +461,7 @@ TOKEN_ID_V1=""
 USE_FASTMINE="yes"
 ```
 
-_Other mineable SLP Tokens Type 1: OPAL, BTCL, FILS, WRS, FANTASY - ask token creators for mining environment_
+_Other known mineable SLP Tokens Type 1: OPAL, BTCL, FILS, WRS, FANTASY - ask token creators for mining environment or check details below_
 
 FILS (https://digitalfils.com):
 
