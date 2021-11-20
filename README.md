@@ -2,7 +2,7 @@
 
 Get [Mminer](https://github.com/mazetoken/mminer) from Github
 
-_Update and tutorial by B_S_Z_ - https://mazetoken.github.io
+_Update and tutorial by B_S_Z - https://mazetoken.github.io_
 
 MAZE token id: [bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378](https://simpleledger.info/token/bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378)
 
@@ -20,7 +20,7 @@ What is updated in the Mminer:
 
 Mminer is tested and it works, but use it at your own risk. The miner is not an "out of the box" application (other software must be installed to run the miner)
 
-Mminer is prepared for mining MAZE, but you can use it to mine other tokens (e.g. Mist) and NFTs (scroll down to tokens environment and replace data in Mminer .env file)
+Mminer is prepared for mining MAZE, but you can use it to mine other tokens (e.g. Mist) and NFTs (scroll down to tokens environment and replace data in Mminer .env file). You can change mineable token name in the generateV1.ts in the line 476 (default is Maze)
 
 #### IMPORTANT: for NFT1-Group Token mining you need to change the token environment (.env file) and after you run `npm i` and before you run `npm start`, go to node_modules folder in Mminer main directory, go to slpjs folder, go to lib folder and open slpjs.js (in editor, e.g. notepad) and change token type from `0x01` to `0x81` in line 423 (it should look like this: `if (type === void 0) { type = 0x81; }`). Do not paste MINER_COVENANT_V1 from SLP Token Type 1 to NFT1-Group Token environment (in .env)
 
@@ -272,7 +272,7 @@ MINER_COVENANT_V1="5779820128947f777601207f75597982012c947f757601687f77767882775
 TOKEN_INIT_REWARD_V1=400000000 // Mist reward is 400 (with 6 decimals); you can change mining reward e.g. 10000000 - this is 1000 with 4 decimal places
 TOKEN_HALVING_INTERVAL_V1=4320 // you can change halving interval
 MINER_DIFFICULTY_V1=3 // do not change this
-MINER_UTF8=""
+MINER_UTF8="" // you can add your mining tag
 TOKEN_START_BLOCK_V1=paste here your token start block
 TOKEN_ID_V1="paste here your token id"
 ``` 
@@ -313,7 +313,7 @@ To create NFT child tokens from mineable NFT1-Group tokens go to your Electron C
 
 --------------------------------------------------------------------------------------
 
-#### If you need any help, ask in Maze SLP Token [Group](https://t.me/mazetokens)
+#### If you need any help, ask in MAZE [Telegram Group](https://t.me/mazetokens)
 
 --------------------------------------------------------------------------------------
 
