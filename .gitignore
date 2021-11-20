@@ -2,5 +2,3 @@ node_modules
 *.js
 *.js.map
 .DS_Store
-.cache
-.cache_lock
