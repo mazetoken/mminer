@@ -46,7 +46,7 @@ bchd-mainnet.electroncash.de:8335
 
 - Download [Electron Cash SLP wallet](https://github.com/simpleledger/Electron-Cash-SLP/releases/download/3.6.7-dev6/Electron-Cash-SLP-3.6.7-dev6-setup.exe)
 
-- Create a standard wallet in Electron Cash. Go to Addresses tab and choose two addresses (one for funding and the second for mining; you can give them a label). You can also create two separate wallets - one for funding and the second for mining - it`s up to you
+- Create a standard wallet in Electron Cash. Go to Addresses tab and choose two addresses (one for funding and the second for mining; you can give them a label). You can also create two separate wallets - one for funding and the second for mining - it`s up to you. No need to create funding wallet if you already have BCH in Electron Cash wallet
 
 - Send some BCH (e.g. 0.00020000) to your funding address
 
@@ -519,7 +519,7 @@ Open PowerShell, navigate to bchdnode directory and run command: `./bchd`
 
 In a few seconds stop it: `Ctrl+C`
 
-Go to C:/bchdnode and edit bchd.conf (example is in the Mminer folder - sample-bchd.conf)
+Go to C:/bchdnode and edit bchd.conf (example is in the Mminer folder - sample-bchd.conf) - remove comment from addrindex, txindex and slpindex, add grpclisten=127.0.0.1)
 
 Go back to PowerShell and run command `/.bchd` again
 
