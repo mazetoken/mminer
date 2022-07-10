@@ -13,7 +13,6 @@ import { BchdNetwork,
          TransactionHelpers, Utils,
          Validation } from "slpjs";
 import { Crypto, ValidatorType1 } from "slp-validate";
-import { GraphSearchClient } from "grpc-graphsearch-node";
 import { ValidityCache } from "./cache";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -103,43 +102,6 @@ const txid: string = process.env.TOKEN_ID_V1!;
     console.timeEnd("SLP-VALIDATE-GRPC");
 })();
 
-// Use Graph Search slp-validate (GS++) - uncomment lines 107-141
-// const excludeList: string[] = [
-    // "token id to exclude",
-// ];
-// const dag = new Map<string, Buffer>();
-// const getRawTransaction = async (id: string) => {
-    // if (! dag.has(id)) {
-        // if (! excludeList.includes(id)) {
-            // { return Buffer.alloc(60); }
-        // }
-        // throw Error(`gs++ server response is missing txid ${id}`);
-    // }
-    // return dag.get(id)!;
-// };
-// const slpValidator = new ValidatorType1({ getRawTransaction });
-// for (const validTxid of excludeList) {
-    // slpValidator.addValidTxidFromStore(validTxid);
-// }
-// (async () => {
-    // console.time("SLP-VALIDATE-W-GRAPH-SEARCH");
-    // const gs = new GraphSearchClient({ url: process.env.GRAPH_SEARCH_URL });
-    // let downloadCount = 0;
-    // (await gs.graphSearchFor({ hash: txid, excludeList })).getTxdataList_asU8().forEach((txn) => {
-        // const txnBuf = Buffer.from(txn);
-        // const id = Crypto.HashTxid(txnBuf).toString("hex");
-        // downloadCount++;
-        // dag.set(id, txnBuf);
-    // });
-    // console.log(`Validating: ${txid}`);
-    // console.log(`This may take a several seconds...`);
-    // const isValid = await slpValidator.isValidSlpTxid({ txid });
-    // console.log(`Final Result: ${isValid}`);
-    // console.log(`Transactions Downloaded: ${downloadCount}`);
-    // console.log(`WARNING: THIS VALIDATION METHOD COMES WITH NO BURN PROTECTION.`);
-    // console.timeEnd(`SLP-VALIDATE-W-GRAPH-SEARCH`);
-// })();
-
 const getRewardAmount = (block: number) => {
     const initReward = parseInt(process.env.TOKEN_INIT_REWARD_V1 as string, 10);
     const halveningInterval = parseInt(process.env.TOKEN_HALVING_INTERVAL_V1 as string, 10);
@@ -228,7 +190,7 @@ const waitForNextBlock = async () => {
     }
     state.bestBlockchainHeight = state.bestBlockchainHeight;
     console.log(`Blockchain height: ${state.bestBlockchainHeight}`);
-    console.log(`Maze token height: ${state.bestTokenHeight}`);
+    console.log(`Mist token height: ${state.bestTokenHeight}`);
     minerTags.forEach((o) => o.conf++);
 };
 
@@ -274,14 +236,14 @@ export const generateV1 = async () => {
     ValidityCache.utxoIds.clear();
 
     state = JSON.parse(JSON.stringify(defaultState));
-    state.bestBlockchainHeight = (await client.getBlockchainInfo()).getBestHeight();
+    //state.bestBlockchainHeight = (await client.getBlockchainInfo()).getBestHeight();
 
     // scan blocks for MINT baton
     if (! state.lastBatonTxid) {
         let blockHeight = (await client.getBlockchainInfo()).getBestHeight();
         while (! state.lastBatonTxid) {
             // TODO: ...
-            // state.bestBlockchainHeight = (await client.getBlockchainInfo()).getBestHeight();
+            state.bestBlockchainHeight = (await client.getBlockchainInfo()).getBestHeight();
             const block = await client.getBlock({ index: blockHeight, fullTransactions: true });
             await processTxnList(block.getBlock()!.getTransactionDataList());
             blockHeight--;
@@ -433,7 +395,7 @@ export const generateV1 = async () => {
     unsignedMintHex = txnHelpers.enableInputsCLTV(unsignedMintHex);
 
     console.log(`Blockchain height: ${state.bestBlockchainHeight}`);
-    console.log(`Maze height: ${state.bestTokenHeight}`);
+    console.log(`Mist height: ${state.bestTokenHeight}`);
 
     if (state.bestTokenHeight >= (state.bestBlockchainHeight - tokenStartBlock)) {
         console.log("Token height is synchronized with blockchain height, after solution is mined will wait for block before submitting solution.");
@@ -473,7 +435,7 @@ export const generateV1 = async () => {
                 console.log("Miner exited early since token reward has been found.");
                 return false;
             }
-            console.log("Please wait, mining for Maze (using fastmine)...");
+            console.log("Please wait, mining for Mist (using fastmine)...");
             const cmd = `${process.cwd()}/fastmine/fastmine ${scriptPreImage.toString("hex")} ${difficulty}`;
             const content =  await execute(cmd) as string;
             const lines = content.split("\n");
@@ -507,7 +469,7 @@ export const generateV1 = async () => {
             }
         }
     } else {
-        console.log("Please wait, mining for Maze (not using fastmine)...");
+        console.log("Please wait, mining for Mist (not using fastmine)...");
 
         let count = 0;
         while (!solhash.slice(0, difficulty).toString("hex").split("").every((s) => s === "0")) {

@@ -6,7 +6,7 @@ _Tutorial by B_S_Z - https://mazetoken.github.io_
 
 MAZE token id: [bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378](https://simpleledger.info/token/bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378)
 
-#### You can mine SLP tokens (e.g. MAZE and Mist) with Mminer and create mineable SLP tokens based on Mistcoin covenant contract script
+#### Mminer is prepared for mining MAZE, but you can mine Mist (scroll down for Mist minig environment to use in .env) and other tokens with Mminer and create mineable SLP tokens based on Mistcoin covenant contract script
 
 Mminer is continuation of [Mistcoin BCHD mist-miner](Mistcoin-archive/bchd_mist_miner_v1.zip) by [Kasumi](https://read.cash/@kasumi). Mistcoin website (https://mistcoin.org) is down, so you can check [Mistcoin Archive](Mistcoin-archive/Mistcoin.md). Check other miners in [Mistcoin archive](Mistcoin-archive/readme.md). You can swap Mist SLP token to Mist SmartBCH SEP20 token on [Mistylake](https://lake.mistswap.fi/). Visit [Mist on SmartBCH](https://mistswap.fi)
 
@@ -16,7 +16,7 @@ What is updated in the Mminer:
 
 - package.json - npm packages (inculding grpc-bchrpc-node v 0.11.5 - works with BCHD nodes that have slp indexing enabled)
 
-- BCHD gRPC slp validation is added and optional GraphSearch GS++ slp validation can be used (https://slp.dev). Check generate_V1.ts in the Mminer src directory - add comment (//) to lines 92-104 to disable BCHD gRPC validation and remove comment from lines 107-141 to enable graphsearch GS++ validation
+- BCHD gRPC slp validation is added (https://slp.dev)
 
 - Mminer does not stop on halvening
 
@@ -33,24 +33,21 @@ Known public BCHD servers you can use for mining:
 ```
 bchd.greyh.at:8335
 bchd.imaginary.cash:8335
-bchd.fountainhead.cash:443
-ryzen.electroncash.de:8335
-bchd-mainnet.electroncash.de:8335
 ```
 
 --------------------------------------------------------------------------------
 
 ### Mining tutorial (Debian or Ubuntu Linux subsystem on Windows 10, Windows 10 or Debian Linux subsystem on Android phone)
 
-#### Prepare Electron Cash SLP desktop wallet for mining
+#### Prepare wallets for mining
 
-- Download [Electron Cash SLP wallet](https://github.com/simpleledger/Electron-Cash-SLP/releases/download/3.6.7-dev6/Electron-Cash-SLP-3.6.7-dev6-setup.exe)
+- Download [Electron Cash SLP wallet](https://github.com/simpleledger/Electron-Cash-SLP/releases) - download 3.6.7-dev8 release
 
-- Create a standard wallet in Electron Cash. Go to Addresses tab and choose two addresses (one for funding and the second for mining; you can give them a label). You can also create two separate wallets - one for funding and the second for mining - it`s up to you. No need to create funding wallet if you already have BCH in Electron Cash wallet
+- Create a standard wallet in Electron Cash. Go to Addresses tab and choose two addresses (one for funding and the second for mining; you can give them a label). Right click on mining address and get the private key (WIF). Save it somewhere (you will need to paste it in the miner .env file)
 
 - Send some BCH (e.g. 0.00020000) to your funding address
 
-- From your funding address send, to your mining address, multiple 0.00001870 BCH in one transanction (go to Send tab - Pay to field). It should look like this: 
+- From your funding address send, to your mining address, multiple 0.00001870 BCH in one transanction (go to Send tab - Pay to field). It should look like this:
 
 ```
 simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn,0.00001870
@@ -67,17 +64,16 @@ simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn,0.00001870
 
 _*Replace simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn with your own mining address. You can send more UTXOs later._
 
-- Right click on your mining address and get your private key (WIF). Save it somewhere (you will need to paste it in the miner .env file)
+_Aternatively use Fullstack.cash wallet for mining (if EC SLP validation does not work) - create [Fullstack.cash wallet](https:wallet.fullstack.cash) - use it for mining only. Get a private key (WIF) from fullstack.cash wallet. Save it somewhere (you will need to paste it in the miner .env file)
 
-_*Do not send other BCH to your mining address, otherwise you could pay high fee or you will not mine anything. Freeze your mining coins (select all 0.00001870 UTXOs and rigt click on it to freeze) before you send any tokens from your wallet to another wallet_
 
 #### Install Nodejs and other sofware
 
 - Make sure that Microsoft Visual C++ Redistributable is installed on your system. If it is not, you can download it from [here](https://aka.ms/vs/16/release/VC_redist.x86.exe) and [here](https://aka.ms/vs/16/release/VC_redist.x64.exe) - you need to install both
 
-- Download and install [Nodejs 14.x LTS](https://nodejs.org/en/) with additional software
+- Download and install [Nodejs 14.x LTS](https://nodejs.org/en/) with additional software when asked
 
-_You should see that e.g. visualstudio2017 build tools, python 3, chocolatey ... is being installed_
+_You should see that e.g. visualstudio2017 build tools, python 3, chocolatey ... is being installed. Newer version of Nodejs might not work wih Mminer on windows, but works on linux_
 
 - Download and install [Git](https://gitforwindows.org/)
 
@@ -259,7 +255,7 @@ _* Run command: `sudo apt update` from time to time to update Linux_
 
 --------------------------------------------------------------------------------------
 
-### How to create a mineable token based on Mistcoin (Mist) covenant contract
+### How to create a mineable token based on Mistcoin (Mist) covenant contract (it might not work anymore because of slpdb does not work anymore)
 
 Open Electron Cash SLP wallet, go to Tokens tab and right click to create a token. Your mineable token can have max 6 decimal places (you will need to remember decimal places to calculate mining reward amount). In Token Quantity filed type 0. Uncheck Fixed supply
 
