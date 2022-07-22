@@ -1,53 +1,41 @@
-### MAZE - a mineable (proof-of-work) Bitcoin Cash Simple Ledger Protocol token
+### MAZE SLP Token - Mminer 1.0.3 
 
-Get [Mminer 1.0.3](https://github.com/mazetoken/mminer) from Github
+Get [Mminer](https://github.com/mazetoken/mminer) from Github
 
-_Tutorial by B_S_Z - https://mazetoken.github.io_
+_Update and tutorial by B_S_Z - https://mazetoken.github.io_
 
 MAZE token id: [bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378](https://simpleledger.info/token/bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378)
 
-#### Mminer is prepared for mining MAZE, but you can mine Mist (scroll down for Mist minig environment to use in .env) and other tokens with Mminer and create mineable SLP tokens based on Mistcoin covenant contract script
+#### You can mine SLP tokens (e.g. MAZE and Mist) with Mminer and create mineable SLP tokens based on Mistcoin covenant contract script
 
-Mminer is continuation of [Mistcoin BCHD mist-miner](Mistcoin-archive/bchd_mist_miner_v1.zip) by [Kasumi](https://read.cash/@kasumi). Mistcoin website (https://mistcoin.org) is down, so you can check [Mistcoin Archive](Mistcoin-archive/Mistcoin.md). Check other miners in [Mistcoin archive](Mistcoin-archive/readme.md). You can swap Mist SLP token to Mist SmartBCH SEP20 token on [Mistylake](https://lake.mistswap.fi/). Visit [Mist on SmartBCH](https://mistswap.fi)
-
-What is updated in the Mminer:
-
-- Mminer is patched for "bn not an integer" error and "dust input attack", and stucked reward reduction (patches are from [Blue`s mist miner](https://gitlab.com/blue_mist/miner))
-
-- package.json - npm packages (inculding grpc-bchrpc-node v 0.11.5 - works with BCHD nodes that have slp indexing enabled)
-
-- BCHD gRPC slp validation is added (https://slp.dev)
-
-- Mminer does not stop on halvening
-
-_Scroll down for a short decription how to run Mminer with BCHD full node (optional)_
-
-Mminer is tested and it works, but use it at your own risk. The miner is not an "out of the box" application (other software must be installed to run the miner)
-
-Mminer is prepared for mining MAZE, but you can use it to mine other tokens (e.g. Mist) and NFTs (scroll down to tokens environment and replace data in Mminer .env file). You can change mineable token name in the generateV1.ts in the line 476 (default is Maze)
-
-#### IMPORTANT: for NFT1-Group Token mining you need to change the token environment (.env file) and after you run `npm i` and before you run `npm start`, go to node_modules folder in Mminer main directory, go to slpjs folder, go to lib folder and open slpjs.js (in editor, e.g. notepad) and change token type from `0x01` to `0x81` in line 423 (it should look like this: `if (type === void 0) { type = 0x81; }`). Do not paste MINER_COVENANT_V1 from SLP Token Type 1 to NFT1-Group Token environment (in .env)
+Mminer is continuation and updated version of [Mistcoin BCHD mist-miner](Mistcoin-archive/bchd_mist_miner_v1.zip). Mistcoin website (https://mistcoin.org) is down for now, so you can check [Mistcoin Archive](Mistcoin-archive/Mistcoin.md). Check other miners in [Mistcoin archive](Mistcoin-archive/readme.md)
 
 Known public BCHD servers you can use for mining: 
 
 ```
-bchd.greyh.at:8335
 bchd.imaginary.cash:8335
+bchd.fountainhead.cash:443
+ryzen.electroncash.de:8335
+bchd.greyh.at:8335
 ```
+
+_* Make a backup of .cache file from time to time (to prevent downloading a lot of txids if you reinstall the miner or run it on another pc/laptop/phone)_
 
 --------------------------------------------------------------------------------
 
-### Mining tutorial (Debian or Ubuntu Linux subsystem on Windows 10, Windows 10 or Debian Linux subsystem on Android phone)
+### Mining tutorial (Debian, Ubuntu or Kali Linux subsystem on Windows 10, Windows 10 or Debian Linux subsystem on Android phone)
 
-#### Prepare wallets for mining
+You need to have some basic knowledge how to use Windows or Linux and a command line. This tutorial may not be for perfect, so use your intuition
 
-- Download [Electron Cash SLP wallet](https://github.com/simpleledger/Electron-Cash-SLP/releases) - download 3.6.7-dev8 release
+#### Prepare Electron Cash SLP desktop wallet for mining
 
-- Create a standard wallet in Electron Cash. Go to Addresses tab and choose two addresses (one for funding and the second for mining; you can give them a label). Right click on mining address and get the private key (WIF). Save it somewhere (you will need to paste it in the miner .env file)
+- Download [Electron Cash SLP wallet](https://github.com/simpleledger/Electron-Cash-SLP/releases/download/3.6.7-dev8/Electron-Cash-SLP-3.6.7-dev8-setup.exe)
+
+- Create a standard wallet in Electron Cash. Go to Addresses tab and choose two addresses (one for funding and the second for mining; you can give them a label)
 
 - Send some BCH (e.g. 0.00020000) to your funding address
 
-- From your funding address send, to your mining address, multiple 0.00001870 BCH in one transanction (go to Send tab - Pay to field). It should look like this:
+- From your funding address send, to your mining address, multiple 0.00001870 BCH in one transanction (go to Send tab - Pay to field). It should look like this: 
 
 ```
 simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn,0.00001870
@@ -64,16 +52,17 @@ simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn,0.00001870
 
 _*Replace simpleledger:qzfl7rg2vc973hk8cp4e6jvcw2ku7fuvxgar8lansn with your own mining address. You can send more UTXOs later._
 
-_Aternatively use Fullstack.cash wallet for mining (if EC SLP validation does not work) - create [Fullstack.cash wallet](https:wallet.fullstack.cash) - use it for mining only. Get a private key (WIF) from fullstack.cash wallet. Save it somewhere (you will need to paste it in the miner .env file)
+- Right click on your mining address and get your private key (WIF). Save it somewhere (you will need to paste it in the miner .env file)
 
+_*Do not send other BCH to your mining address, otherwise you could pay high fee or you will not mine anything. Freeze your mining coins (select all 0.00001870 UTXOs and rigt click on it to freeze) before you send any tokens from your wallet to another wallet_
 
 #### Install Nodejs and other sofware
 
 - Make sure that Microsoft Visual C++ Redistributable is installed on your system. If it is not, you can download it from [here](https://aka.ms/vs/16/release/VC_redist.x86.exe) and [here](https://aka.ms/vs/16/release/VC_redist.x64.exe) - you need to install both
 
-- Download and install [Nodejs 14.x LTS](https://nodejs.org/en/) with additional software when asked
+- Download and install [Nodejs 14.x LTS](https://nodejs.org/en/) with additional software
 
-_You should see that e.g. visualstudio2017 build tools, python 3, chocolatey ... is being installed. Newer version of Nodejs might not work wih Mminer on windows, but works on linux_
+_You should see that eg. visualstudio2017 build tools, python 3, chocolatey ... are being installed_
 
 - Download and install [Git](https://gitforwindows.org/)
 
@@ -84,13 +73,13 @@ _You should see that e.g. visualstudio2017 build tools, python 3, chocolatey ...
 
 - Open Windows Control panel - go to "Programs" - go to "Turn Windows features on or off" - select "Windows Subsystem for Linux" and check the box, click ok and reboot Windows
 
-- Download and install Debian Linux or Ubuntu 20.4 LTS from Microsoft Store
+- Download and install Ubuntu 20.4 LTS from Microsoft Store
 
-- Open Linux command line (Start menu - Debian or Ubuntu)
+- Open Linux command line (Start menu - Ubuntu)
 
 - Setup your username and password
 
-- In a command line type commands (press enter after every command; commands are the same for Debian or Ubuntu Linux):
+- In a command line type commands:
 
 `cd /mnt/c`
 
@@ -100,7 +89,7 @@ _You should see that e.g. visualstudio2017 build tools, python 3, chocolatey ...
 
 `sudo apt-get install wget curl`
 
-`curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -`
+`curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -`
 
 `sudo apt-get install -y nodejs`
 
@@ -118,7 +107,7 @@ _You should see that e.g. visualstudio2017 build tools, python 3, chocolatey ...
 
 `npm i`
 
-_* Ignore errors/warnings (if any appears eg. keccak and secp256k1). Do not run npm audit fix!
+_* Ignore errors/warnings. Do not run npm audit fix!
 
 Open windows explorer (no need to close a command line) and go to mminer folder on your drive C. Click on mminer folder and you will see the miner files. Open .env file in notepad (or any other editor). Paste your WIF (your mining address private key) here "..." (WIF="..."). Leave BCHD_GRPC_URL="" and BCHD_GRPC_CERT="" empty / no url (or paste known url in BCHD_GRPC_URL="..."). You can type your mining tag (your nick or whatever) in MINER_UTF8="...". Save the file
 
@@ -128,9 +117,7 @@ Go back to the command line and type commands (usually you need to do this only 
 
 or `export NODE_OPTIONS=--max_old_space_size=8192` (for 8GB RAM)
 
-_You can calculate max old space for your RAM amount - 1024 x your RAM_
-
-_* You can use Mminer`s .cache file: type/paste this command: `wget https://github.com/mazetoken/mminer/raw/master/txid-cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mminer/raw/master/txid-cache/mist/.cache`_
+_* or you can use my .cache file - type/paste this command: `wget https://github.com/mazetoken/mminer/raw/main/txid-cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mminer/raw/main/txid-cache/mist/.cache` - make sure that if you downolad it there is dot (.) in the filename - .cache. You can calculate max old space for your RAM amount - 1024 x your RAM_
 
 `npm start`
 
@@ -165,9 +152,7 @@ Go back to PowerShell and type commands (usually you need to do this only once t
 
 or `$env:NODE_OPTIONS="--max-old-space-size=8192"` (for 8GB RAM)
 
-_You can calculate max old space for your RAM amount - 1024 x your RAM_
-
-_* You can use Mminer`s .cache file: copy .cache from txid-cache/Maze (or Mist) to main Mminer directory_
+_* or you can use my .cache file - type/paste this command: `wget https://github.com/mazetoken/mminer/raw/main/txid-cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mminer/raw/main/txid-cache/mist/.cache` - make sure that if you downolad it there is dot (.) in the filename - .cache. You can calculate max old space for your RAM amount - 1024 x your RAM_
 
 `npm start`
 
@@ -178,21 +163,13 @@ _* Press Ctrl C and type Y if you want to stop the the miner_
 
 #### Mining on Android phone with Debian Linux
 
-_* You need at least 2GB RAM_
-
 ##### Go to Google Play Store and download UserLAnd app
 
 - Install the app
 
 - Open the app and install Debian Linux (not Ubuntu - fastmine does not work well with Ubuntu on Android)
 
-- Setup your username and passwords (use a short username and password - e.g. 54321 - you can change the password later when you get used to Linux)
-
-- Choose SSH
-
-- change password if asked (can be the same password e.g. 54321 ;-) 
-
-- In a command line type your password (it is invisible) and when you are in, type or paste commands (one by one, tap enter after every command, type Y when asked; you can open the tutorial in your browser to make it easier):
+- Run commands:
 
 `sudo apt update`
 
@@ -200,7 +177,7 @@ _* You need at least 2GB RAM_
 
 `sudo apt-get install git wget curl`
 
-`curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -`
+`curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -`
 
 `sudo apt-get install -y nodejs`
 
@@ -230,7 +207,7 @@ _* Tap: ctrl O enter - to save changes and ctrl X enter - to exit editor_
 
 `npm i`
 
-_* Ignore errors/warnings (if any appears eg. keccak and secp256k1). Do not run npm audit fix !
+_* Ignore errors/warnings. Do not run npm audit fix !
 
 
 `export NODE_OPTIONS=--max_old_space_size=2048` (for 2GB RAM)
@@ -241,7 +218,7 @@ _* usually you need to do this ^ only once to download txids (but it might not w
 
 `npm start`
 
-_* Txids will be downloaded first (it may take a while) and then mining will start. If you get Javasrcipt heap out of memory error or txids downloading is "killed", you may need to install the miner on desktop first and download .cache file to your phone miner directory (you can use `wget` command). You can use Mminer`s .cache file: before `npm start` type/paste this command: `wget https://github.com/mazetoken/mining/raw/master/txid-cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mining/raw/master/txid-cache/mist/.cache`_
+_* Txids will be downloaded first (it may take a while) and then mining will start. If you get Javasrcipt heap out of memory error or txids downloading is "killed", you may need to install the miner on desktop first and download .cache file to your phone miner directory (you can use `wget` command). Or you can use my .cache file - before `npm start` type/paste this command: `wget https://github.com/mazetoken/mminer/raw/main/txid-cache/maze/.cache` or this for Mist: `wget https://github.com/mazetoken/mminer/raw/main/txid-cache/mist/.cache`_
 
 _* Tap Ctrl C (to stop the miner)_
 
@@ -255,7 +232,7 @@ _* Run command: `sudo apt update` from time to time to update Linux_
 
 --------------------------------------------------------------------------------------
 
-### How to create a mineable token based on Mistcoin (Mist) covenant contract (it might not work anymore because of slpdb does not work anymore)
+### How to create a mineable token based on Mistcoin (Mist) covenant contract
 
 Open Electron Cash SLP wallet, go to Tokens tab and right click to create a token. Your mineable token can have max 6 decimal places (you will need to remember decimal places to calculate mining reward amount). In Token Quantity filed type 0. Uncheck Fixed supply
 
@@ -329,10 +306,6 @@ _* Change data in Mminer .env file to mine different tokens_
 _* Do not paste MINER_COVENANT_V1 from SLP Token Type 1 to NFT1-Group Token environment (.env)_
 
 _* Do not forget that, for NFT1-Group Token mining, after you run `npm i` and before you run `npm start`, you should go to node_modules folder in Mminer directory, go to slpjs folder, go to lib folder and open slpjs.js (in editor, e.g. notepad) and change token type from `0x01` to `0x81` in line 423 (it should look like this: `if (type === void 0) { type = 0x81; }`)_
-
-- It is possible to use one Mminer to mine a few tokens, but it is not recommended (because of a lot of txids to downolad)
-
-- If a token is not mined for a long time it may be stucked in the blockchain. We can fix it
 
 _* Make a backup of .cache file from time to time (to prevent downloading a lot of txids if you reinstall the miner or run it on another pc/laptop/phone)_
 
@@ -504,31 +477,6 @@ TOKEN_START_BLOCK_V1=683859
 TOKEN_ID_V1="8d1731c60d3513fa06c87e14ce0f89b5b25d6fc843253212adb579b650bd93b7"
 USE_FASTMINE="yes"
 ```
-
-##### BCHD full node
-
-Download and unzip [BCHD node installer](https://bchd.cash/) e.g. to drive C (C:/bchdnode)
-
-Download and install [Go](https://golang.org/) for Windows
-
-Open PowerShell, navigate to bchdnode directory and run command: `./bchd` 
-
-In a few seconds stop it: `Ctrl+C`
-
-Go to C:/bchdnode and edit bchd.conf (example is in the Mminer folder - sample-bchd.conf) - remove comment from addrindex, txindex and slpindex, add grpclisten=127.0.0.1)
-
-Go back to PowerShell and run command `/.bchd` again
-
-Sync the node (about 250 GB)
-
-Edit .env file in the Mminer:
-
-- remove comment from `BCHD_GRPC_URL="127.0.0.1:8335"` and from `BCHD_GRPC_CERT="C:\Users\Username\AppData\Local\Bchd\rpc.cert"`. Change Username for your Windows username
-
-- add comment to other BCHD_GRPC_URL and BCHD_GRPC_CERT="")
-
-Open another PowerShell, navigate to Mminer directory and run command: `npm start`
-
 
 --------------------------------------------------------------------------------------------
 

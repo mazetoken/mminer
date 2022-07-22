@@ -87,7 +87,7 @@ const network = new BchdNetwork({ BITBOX, client, validator });
 
 const txid: string = process.env.TOKEN_ID_V1!;
 
-// Use slp-validate (BCHD gRPC) - uncomment lines 92-104
+/// Use slp-validate (BCHD gRPC)
 (async function() {
     console.time("SLP-VALIDATE-GRPC");
     const slpValidator = new ValidatorType1({ getRawTransaction: async (txid: string) => {
@@ -98,7 +98,7 @@ const txid: string = process.env.TOKEN_ID_V1!;
     console.log("This may take a several seconds...");
     const isValid = await slpValidator.isValidSlpTxid({ txid });
     console.log("Final Result:", isValid);
-    // console.log("WARNING: THIS VALIDATION METHOD COMES WITH NO BURN PROTECTION.");
+    /// console.log("WARNING: THIS VALIDATION METHOD COMES WITH NO BURN PROTECTION.");
     console.timeEnd("SLP-VALIDATE-GRPC");
 })();
 
@@ -186,7 +186,8 @@ streams.bchdTransactions!.on("data", async (data: TransactionNotification) => {
 const waitForNextBlock = async () => {
     const block0 = state.bestBlockchainHeight;
     while (block0 === state.bestBlockchainHeight) {
-        await sleep(20);
+        //await sleep(20);
+        await sleep(1);
     }
     state.bestBlockchainHeight = state.bestBlockchainHeight;
     console.log(`Blockchain height: ${state.bestBlockchainHeight}`);
@@ -236,7 +237,6 @@ export const generateV1 = async () => {
     ValidityCache.utxoIds.clear();
 
     state = JSON.parse(JSON.stringify(defaultState));
-    //state.bestBlockchainHeight = (await client.getBlockchainInfo()).getBestHeight();
 
     // scan blocks for MINT baton
     if (! state.lastBatonTxid) {
@@ -262,7 +262,8 @@ export const generateV1 = async () => {
                 reversedHashOrder: true, includeMempool: true });
         } catch (error) {
             console.log("Cannot find contract tip.");
-            await sleep(1000);
+            //await sleep(1000);
+            await sleep(100);
             return;
         }
     }
@@ -556,7 +557,8 @@ export const generateV1 = async () => {
         } else if ((error as Error).message.includes("has insufficient priority")) {
             throw Error("Transaction fee too low");
         } else {
-            console.log(`BCHD submit failed: ${error.message}`);
+            //console.log(`BCHD submit failed: ${ error.message }`);
+            console.log(`BCHD submit failed`);
         }
     }
 
